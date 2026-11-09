@@ -1,4 +1,4 @@
-# Infinity Store — Next.js private development preview
+# Infinity Store — Next.js catalog preview
 
 Built 9 November 2026. French (`/fr`) and Belgian Dutch (`/nl`), EUR. Next.js App Router, React, TypeScript, CSS. No checkout, accounts, admin, tracking or database.
 
@@ -22,9 +22,9 @@ npm run readiness
 npm run build:commercial
 ```
 
-`build` compiles the private preview. `build:commercial` deliberately fails while site-wide mandatory data/reviews are missing. It does not certify legal compliance, authenticate evidence or deploy anything. Never use the ordinary preview build as a commercial approval. All current builds remain non-indexable and access-restricted regardless of readiness; enabling a reviewed production host, indexing, real canonicals, reciprocal hreflang, sitemap and approved policies is a separate implementation/review task. No public deployment was requested or performed.
+`build` compiles the private preview. `build:commercial` deliberately fails while site-wide mandatory data/reviews are missing. It does not certify legal compliance, authenticate evidence or deploy anything. Never use the ordinary preview build as a commercial approval. All current builds remain non-indexable regardless of readiness; enabling a reviewed production host, indexing, real canonicals, reciprocal hreflang, sitemap and approved policies is a separate implementation/review task. The catalog preview can be deployed without a username or password.
 
-The server binds to loopback. Non-loopback URLs require Basic authentication using `PREVIEW_USER` and `PREVIEW_PASSWORD`, otherwise return 401. Remote hosting requires HTTPS, secret management and an authenticated reverse proxy that validates Host; do not expose the development server. No credentials are committed. `noindex` is an additional indexing control, not access control.
+The local server binds to loopback. Hosted domains open without Basic authentication; no preview username or password is required. The proxy sets the document language for French and Dutch routes. `noindex` controls indexing and does not restrict access.
 
 ## Edit
 
@@ -40,4 +40,8 @@ Do not add invented approvals, prices, hours, language availability or legal ide
 
 ## Handover
 
-See `docs/IMPLEMENTATION.md`, `docs/RESEARCH.md`, `docs/LAUNCH.md`, `docs/MEASUREMENT.md`, and the private editable operating templates under `private/`. Public web routes never serve these files. Public deployment requires separate explicit authorization under the supplied brief.
+See `docs/IMPLEMENTATION.md`, `docs/RESEARCH.md`, `docs/LAUNCH.md`, `docs/MEASUREMENT.md`, and the private editable operating templates under `private/`. Public web routes never serve these files. Commercial launch requirements are documented in `docs/LAUNCH.md`.
+
+## Deploy the catalog preview
+
+Import this repository into Vercel or Netlify as a Next.js project and use `npm run build`. No application environment variables are required. Redeploy after pulling the password-gate removal. Any old `PREVIEW_USER` and `PREVIEW_PASSWORD` settings can be deleted; the application no longer reads them.

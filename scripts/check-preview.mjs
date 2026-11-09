@@ -33,8 +33,12 @@ for (const path of ['/fr/produits/unapproved-sku','/nl/producten/unapproved-sku'
 assert.match(await (await fetch(origin+'/robots.txt')).text(),/Disallow: \//);
 assert.ok(!(await (await fetch(origin+'/sitemap.xml')).text()).includes('<url>'));
 const accessStatus = await new Promise((resolve,reject) => {
-  const req = http.get(origin + '/fr',{ headers: { Host:'untrusted.example' } },res => {res.resume();resolve(res.statusCode);});
+  const req = http.get(origin + '/fr',{ headers: { Host:'deployed.example' } },res => {
+    res.resume();
+    resolve({ status:res.statusCode, authenticate:res.headers['www-authenticate'] });
+  });
   req.on('error',reject);
 });
-assert.equal(accessStatus,401,'non-loopback Host requires preview authentication');
+assert.equal(accessStatus.status,200,'hosted domains open without preview authentication');
+assert.equal(accessStatus.authenticate,undefined,'no browser password challenge');
 console.log(JSON.stringify({ routes:seen.size, internalAndExternalLinks:links, whatsappLinks, blockedPaths:8, externalHostAccess:accessStatus, result:'passed' },null,2));
