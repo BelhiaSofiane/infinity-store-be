@@ -1,5 +1,7 @@
 # Infinity Store — Next.js catalog preview
 
+Latest design update: the owner's Google Stitch catalog has been adapted into Next.js, with functional category filters, Game Pass duration comparison and editable `.99` preview price proposals. See `docs/STITCH-REDESIGN.md` for the rollback checkpoint and verification, and `docs/CONVERSION-STRATEGY.md` for researched conversion hypotheses. Original seller prices are preserved; no offer was commercially approved.
+
 Built 9 November 2026. French (`/fr`) and Belgian Dutch (`/nl`), EUR. Next.js App Router, React, TypeScript, CSS. No checkout, accounts, admin, tracking or database.
 
 ## Run
