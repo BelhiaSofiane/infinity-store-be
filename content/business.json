@@ -1,0 +1,32 @@
+{
+  "tradingName": "Infinity Store",
+  "establishment": "Algeria",
+  "phone": "+213 549 26 03 83",
+  "whatsapp": "https://wa.me/213549260383",
+  "currency": "EUR",
+  "legalName": null,
+  "legalForm": null,
+  "registration": null,
+  "address": null,
+  "email": null,
+  "publicOrigin": null,
+  "taxAssessment": null,
+  "privacyAssessment": null,
+  "withdrawalAssessment": null,
+  "durableConfirmationProcess": null,
+  "paymentAndFulfillment": null,
+  "algerianObligationsReview": null,
+  "accessibilityReview": null,
+  "support": {
+    "timezone": "Europe/Brussels",
+    "hours": null,
+    "holidayClosures": null,
+    "humanLanguages": [],
+    "includedAssistance": [],
+    "paidAssistance": [],
+    "duration": null,
+    "responseTarget": null,
+    "escalationOwner": null,
+    "reviewReference": null
+  }
+}

@@ -1,0 +1,15 @@
+# PRIVATE — policy drafting worksheet v2026-11-09.1
+
+Unapproved. No business facts are filled in. Both language versions require professional review and actual operating details. Approved final text belongs in `content/policies.json`; placeholders must never be published. These are drafting structures, not completed terms.
+
+| Document | FR drafting requirements | NL drafting requirements |
+| --- | --- | --- |
+| Identity | Vendeur contractant [nom/forme], adresse, enregistrement, fiscalité applicable, e-mail et téléphone ; établissement réel en Algérie | Contractuele verkoper [naam/rechtsvorm], adres, registratie, toepasselijke fiscale gegevens, e-mail en telefoon; werkelijke vestiging in Algerije |
+| Terms | Classification et conditions par SKU ; offre/acceptation/formation ; prix TTC et frais ; paiement ; livraison ; durée/renouvellement/annulation ; rétractation ; conformité ; réclamations ; droit applicable préservant protections impératives | Classificatie en voorwaarden per SKU; offerte/aanvaarding/contractsluiting; totaalprijzen/belastingen/kosten; betaling; levering; duur/verlenging/opzegging; herroeping; conformiteit; klachten; toepasselijk recht met behoud van dwingende bescherming |
+| Privacy | Responsable et contacts ; traitements/bases ; destinataires ; hébergeur/journaux ; WhatsApp ; accès Algérie/transferts ; conservation ; droits ; représentant éventuel | Verwerkingsverantwoordelijke/contact; doelen/rechtsgronden; ontvangers; hosting/logboeken; WhatsApp; toegang Algerije/doorgiften; bewaring; rechten; eventuele vertegenwoordiger |
+| Storage | Inventaire réel cookies/stockage/scripts ; aucun traceur optionnel actuel ; langue dans URL ; réévaluer hébergement et ajouts | Werkelijke inventaris cookies/opslag/scripts; momenteel geen optionele trackers; taal in URL; hosting en toevoegingen opnieuw beoordelen |
+| Withdrawal/returns | Délais et point de départ adaptés ; formulaire-type ; fonction si applicable et accusé durable ; retour/coûts ; remboursement ; exceptions numériques/services séparées et consentements réels ; recours conformité | Passende termijnen/startmoment; modelformulier; functie indien van toepassing en duurzame bevestiging; retour/kosten; terugbetaling; afzonderlijke digitale/dienstenuitzonderingen en echte toestemming; conformiteitsrechten |
+| Delivery | Origine/territoire/méthode/délai confirmés ; frais/importation ; transfert des risques ; instructions et recours | Bevestigde oorsprong/gebied/methode/termijn; kosten/invoer; risico-overgang; instructies en rechtsmiddelen |
+| Accessibility | Périmètre/référentiel réellement évalués ; limites ; contact et réponse ; obligations applicables évaluées | Werkelijk beoordeelde omvang/norm; beperkingen; contact/opvolging; toepasselijke verplichtingen beoordeeld |
+
+Do not add a discontinued EU ODR-platform link, unsupported ADR membership, exclusive Algerian remedies that remove mandatory consumer rights, blanket non-refundable digital terms or invented returns addresses. Fill actual withdrawal model and statutory wording only after classification and Belgian legal review. No declaration submission mechanism has been implemented.

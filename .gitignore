@@ -1,0 +1,8 @@
+node_modules/
+.next/
+.env*
+!.env.example
+private/evidence/
+private/support-log.csv
+*.tsbuildinfo
+qa-output/

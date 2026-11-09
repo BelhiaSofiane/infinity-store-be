@@ -1,0 +1,16 @@
+{
+  "name": "infinity-store",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --hostname 127.0.0.1",
+    "build": "next build",
+    "start": "next start --hostname 127.0.0.1",
+    "build:commercial": "node scripts/readiness.mjs && next build",
+    "readiness": "node scripts/readiness.mjs",
+    "typecheck": "tsc --noEmit",
+    "test": "node --test tests/*.test.mjs"
+  },
+  "dependencies": { "next": "latest", "react": "latest", "react-dom": "latest", "server-only": "^0.0.1" },
+  "devDependencies": { "typescript": "^5", "@types/node": "^22", "@types/react": "^19", "@types/react-dom": "^19" }
+}

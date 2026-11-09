@@ -1,0 +1,137 @@
+[
+  {
+    "sku": "windows-11-pro-office",
+    "slug": "windows-11-pro-office",
+    "category": "windows",
+    "status": "pending_review",
+    "edition": "Windows 11 Pro + Office",
+    "priceEUR": 25,
+    "translations": {
+      "fr": {
+        "name": "Windows 11 Pro + Office"
+      },
+      "nl": {
+        "name": "Windows 11 Pro + Office"
+      }
+    }
+  },
+  {
+    "sku": "iptv-1-an",
+    "slug": "iptv-1-an",
+    "category": "iptv",
+    "status": "pending_review",
+    "edition": "",
+    "duration": "1 an",
+    "priceEUR": 35,
+    "translations": {
+      "fr": {
+        "name": "IPTV ? 1 an"
+      },
+      "nl": {
+        "name": "IPTV ? 1 jaar"
+      }
+    }
+  },
+  {
+    "sku": "game-pass-2-mois",
+    "slug": "game-pass-2-mois",
+    "category": "game-pass",
+    "status": "pending_review",
+    "edition": "",
+    "duration": "2 mois",
+    "priceEUR": 25,
+    "translations": {
+      "fr": {
+        "name": "Game Pass ? 2 mois"
+      },
+      "nl": {
+        "name": "Game Pass ? 2 maanden"
+      }
+    }
+  },
+  {
+    "sku": "game-pass-85-jours",
+    "slug": "game-pass-85-jours",
+    "category": "game-pass",
+    "status": "pending_review",
+    "edition": "",
+    "duration": "85 jours",
+    "priceEUR": 35,
+    "translations": {
+      "fr": {
+        "name": "Game Pass ? 85 jours"
+      },
+      "nl": {
+        "name": "Game Pass ? 85 dagen"
+      }
+    }
+  },
+  {
+    "sku": "game-pass-120-jours",
+    "slug": "game-pass-120-jours",
+    "category": "game-pass",
+    "status": "pending_review",
+    "edition": "",
+    "duration": "120 jours",
+    "priceEUR": 45,
+    "translations": {
+      "fr": {
+        "name": "Game Pass ? 120 jours"
+      },
+      "nl": {
+        "name": "Game Pass ? 120 dagen"
+      }
+    }
+  },
+  {
+    "sku": "game-pass-6-mois",
+    "slug": "game-pass-6-mois",
+    "category": "game-pass",
+    "status": "pending_review",
+    "edition": "",
+    "duration": "6 mois",
+    "priceEUR": 60,
+    "translations": {
+      "fr": {
+        "name": "Game Pass ? 6 mois"
+      },
+      "nl": {
+        "name": "Game Pass ? 6 maanden"
+      }
+    }
+  },
+  {
+    "sku": "game-pass-8-mois",
+    "slug": "game-pass-8-mois",
+    "category": "game-pass",
+    "status": "pending_review",
+    "edition": "",
+    "duration": "8 mois",
+    "priceEUR": 75,
+    "translations": {
+      "fr": {
+        "name": "Game Pass ? 8 mois"
+      },
+      "nl": {
+        "name": "Game Pass ? 8 maanden"
+      }
+    }
+  },
+  {
+    "sku": "game-pass-1-an",
+    "slug": "game-pass-1-an",
+    "category": "game-pass",
+    "status": "pending_review",
+    "edition": "",
+    "duration": "1 an",
+    "priceEUR": 100,
+    "translations": {
+      "fr": {
+        "name": "Game Pass ? 1 an"
+      },
+      "nl": {
+        "name": "Game Pass ? 1 jaar"
+      }
+    }
+  }
+]
