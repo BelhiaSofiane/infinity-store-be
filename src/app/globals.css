@@ -18,23 +18,16 @@ html {
 }
 body {
   margin: 0;
-  background: var(--bg);
+  min-height: 100vh;
+  background:
+    radial-gradient(ellipse at 95% 5%, #38407455, transparent 45%),
+    radial-gradient(ellipse at 0% 55%, #304c6050, transparent 50%),
+    linear-gradient(145deg, #0a172c 0%, #191934 42%, #102c36 75%, #090e1c 100%);
   color: var(--ink);
   font-family: var(--font-body), sans-serif;
   font-size: 14px;
   line-height: 1.7;
   -webkit-font-smoothing: antialiased;
-}
-body:before {
-  content: "";
-  position: absolute;
-  pointer-events: none;
-  z-index: -1;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 1100px;
-  background: radial-gradient(ellipse at 80% 25%, #26345c35, transparent 65%);
 }
 a {
   color: inherit;
@@ -1774,5 +1767,25 @@ h2 {
   *:after {
     animation: none !important;
     transition: none !important;
+  }
+}
+.pass-art.pass-poster-frame {
+  min-height: 340px;
+  align-self: stretch;
+  padding: 0;
+}
+.pass-art .pass-poster {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  max-width: none;
+  height: 300%;
+  object-fit: cover;
+  object-position: center top;
+  filter: none;
+}
+@media (max-width: 680px) {
+  .pass-art.pass-poster-frame {
+    min-height: 230px;
   }
 }

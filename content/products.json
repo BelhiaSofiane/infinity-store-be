@@ -5,7 +5,7 @@
     "category": "windows",
     "status": "pending_review",
     "edition": "Windows 11 Pro + Office",
-    "priceEUR": 25,
+    "priceEUR": 24.99,
     "translations": {
       "fr": {
         "name": "Windows 11 Pro + Office"
@@ -22,7 +22,7 @@
     "status": "pending_review",
     "edition": "",
     "duration": "1 an",
-    "priceEUR": 35,
+    "priceEUR": 34.99,
     "translations": {
       "fr": {
         "name": "IPTV ? 1 an"
@@ -39,7 +39,7 @@
     "status": "pending_review",
     "edition": "",
     "duration": "2 mois",
-    "priceEUR": 25,
+    "priceEUR": 24.99,
     "translations": {
       "fr": {
         "name": "Game Pass ? 2 mois"
@@ -56,7 +56,7 @@
     "status": "pending_review",
     "edition": "",
     "duration": "85 jours",
-    "priceEUR": 35,
+    "priceEUR": 34.99,
     "translations": {
       "fr": {
         "name": "Game Pass ? 85 jours"
@@ -73,7 +73,7 @@
     "status": "pending_review",
     "edition": "",
     "duration": "120 jours",
-    "priceEUR": 45,
+    "priceEUR": 44.99,
     "translations": {
       "fr": {
         "name": "Game Pass ? 120 jours"
@@ -90,7 +90,7 @@
     "status": "pending_review",
     "edition": "",
     "duration": "6 mois",
-    "priceEUR": 60,
+    "priceEUR": 59.99,
     "translations": {
       "fr": {
         "name": "Game Pass ? 6 mois"
@@ -107,7 +107,7 @@
     "status": "pending_review",
     "edition": "",
     "duration": "8 mois",
-    "priceEUR": 75,
+    "priceEUR": 74.99,
     "translations": {
       "fr": {
         "name": "Game Pass ? 8 mois"
@@ -124,7 +124,7 @@
     "status": "pending_review",
     "edition": "",
     "duration": "1 an",
-    "priceEUR": 100,
+    "priceEUR": 99.99,
     "translations": {
       "fr": {
         "name": "Game Pass ? 1 an"

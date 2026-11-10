@@ -8,7 +8,7 @@ test('client prices are recorded while incomplete offers remain unpublished', ()
   assert.equal(categories.length,5);
   const products = read('content/products.json');
   assert.equal(products.length,8);
-  assert.deepEqual(products.map(p => p.priceEUR),[25,35,25,35,45,60,75,100]);
+  assert.deepEqual(products.map(p => p.priceEUR),[24.99,34.99,24.99,34.99,44.99,59.99,74.99,99.99]);
   assert.deepEqual(products.map(p => p.duration ?? null),[null,'1 an','2 mois','85 jours','120 jours','6 mois','8 mois','1 an']);
   assert.equal(new Set(products.map(p => p.slug)).size,8);
   for (const product of products) {

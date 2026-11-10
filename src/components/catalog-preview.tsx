@@ -43,7 +43,8 @@ export function CatalogPreview({
     new Intl.NumberFormat(locale + "-BE", {
       style: "currency",
       currency: "EUR",
-      maximumFractionDigits: 0,
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
     }).format(p.priceEUR);
   const name = (p: DraftProduct) =>
     p.translations[locale].name.replace(" ? ", " — ");
@@ -84,15 +85,15 @@ export function CatalogPreview({
             className="pass-feature"
             aria-labelledby={`${radioName}-title`}
           >
-            <div className="pass-art">
-              <div className="pass-orbit" aria-hidden="true" />
+            <div className="pass-art pass-poster-frame">
               <img
-                src="/assets/catalog/game-pass-logo.png"
+                className="pass-poster"
+                src="/assets/catalog/Gamepass%20post.png"
                 alt="Xbox Game Pass"
-                width="1225"
-                height="150"
+                width="896"
+                height="1200"
+                loading="lazy"
               />
-              <span>{labels.game}</span>
             </div>
             <div className="pass-content">
               <span className="product-family">Game Pass</span>
