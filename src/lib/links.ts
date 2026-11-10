@@ -11,6 +11,6 @@ export function whatsapp(locale: Locale, type: 'inquiry' | 'support' | 'complain
     nl: { inquiry: 'Hallo Infinity Store, ik wil graag informatie ontvangen.', support: 'Hallo Infinity Store, ik wil graag hulp bij een bestaande aankoop.', complaint: 'Hallo Infinity Store, ik wil graag een klacht, retour of annulering bespreken.' },
   };
   let message: string = messages[locale][type];
-  if (product) message += ' ' + [product.name, `SKU: ${product.sku}`, product.edition.trim(), product.duration].filter(Boolean).join(' · ');
+  if (product) message += ` ${product.name} · SKU: ${product.sku} · ${product.edition}${product.duration ? ' · ' + product.duration : ''}`;
   return 'https://wa.me/213549260383?text=' + encodeURIComponent(message);
 }

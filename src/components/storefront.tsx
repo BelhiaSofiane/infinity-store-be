@@ -5,8 +5,6 @@ import { business, getProducts, getDraftProducts, type Product } from '@/lib/sto
 import { Icon } from './icon';
 import { Navigation } from './navigation';
 import { CatalogPreview } from './catalog-preview';
-import { catalogCopy } from '@/lib/catalog-copy';
-import previewPricing from '../../content/preview-pricing.json';
 
 export function WhatsApp({ locale, type = 'inquiry', children, className = 'button dark', product }: { locale: Locale; type?: 'inquiry' | 'support' | 'complaint'; children?: React.ReactNode; className?: string; product?: Product }) {
   return <a className={className} href={whatsapp(locale,type,product && { name: product.translations[locale].name, sku: product.sku, edition: product.edition, duration: product.duration })} target="_blank" rel="noopener noreferrer">{children || translations[locale].inquiry}<Icon name="external" size={18}/></a>;
@@ -16,17 +14,15 @@ export function Shell({ locale, page, slug, children }: { locale: Locale; page: 
   return <>
     <a className="skip-link" href="#main">{t.skip}</a>
     <div className="utility"><div className="container utility-inner"><span><span className="status-dot"/>{t.preview} <span className="utility-detail">— {t.previewNote}</span></span></div></div>
-    <header className="header container"><Link className="brand" href={href(locale)} aria-label="Infinity Store"><span className="brand-symbol">∞</span><span className="brand-wordmark">INFINITY STORE<small>HIGH-TECH & LICENCES</small></span></Link><Navigation locale={locale} page={page} slug={slug}/><WhatsApp locale={locale} className="button header-cta">{t.ask}<span className="sr-only"> WhatsApp</span></WhatsApp></header>
+    <header className="header container"><Link className="brand" href={href(locale)} aria-label="Infinity Store"><span className="brand-symbol">∞</span><span>infinity<span className="brand-store">store</span><span className="brand-dot">.</span></span></Link><Navigation locale={locale} page={page} slug={slug}/><WhatsApp locale={locale} className="button header-cta">{t.ask}<span className="sr-only"> WhatsApp</span></WhatsApp></header>
     <main id="main">{children}</main>
     <footer className="footer"><div className="container footer-grid"><div className="footer-brand"><Link className="brand" href={href(locale)}><span className="brand-symbol">∞</span><span>infinity<span className="brand-store">store</span>.</span></Link><p>{t.footerAbout}</p><span className="footer-country">{t.country} → {locale === 'fr' ? 'Belgique' : 'België'}</span></div><div><h2>{t.explore}</h2>{(['home','catalog','support','contact'] as const).map((p,i) => <Link key={p} href={href(locale,p)}>{t.nav[i]}</Link>)}</div><div><h2>{t.information}</h2>{Object.entries(t.policies).map(([key,label]) => <Link key={key} href={href(locale,key as Page)}>{label}</Link>)}</div><div><h2>{t.contact}</h2><a href={whatsapp(locale)} target="_blank" rel="noopener noreferrer">+213 549 26 03 83 <Icon name="external" size={14}/></a><p className="footer-small">{t.emailMissing}</p><Link href={href(locale === 'fr' ? 'nl' : 'fr', page, slug)}>{locale === 'fr' ? 'Nederlands' : 'Français'} <Icon name="arrow" size={14}/></Link></div></div><div className="container footer-bottom"><span>© {new Date().getFullYear()} Infinity Store</span><span>{t.footerNote}</span><span>FR / NL · EUR</span></div></footer>
   </>;
 }
 export function ConceptArt({ locale }: { locale: Locale }) {
-  const t = translations[locale];
-  return <figure className="concept-art" aria-label={t.illustration}>
-    <div className="art-grid"/><div className="art-top"><span><span className="small-cross">+</span> INFINITY / 001</span><Icon name="external" size={19}/></div>
-    <svg className="infinity-art" viewBox="0 0 600 430" role="img" aria-label={t.illustration}><defs><linearGradient id="ribbon" x1="0" y1="0" x2="1" y2="1"><stop stopColor="#ded5ff"/><stop offset=".28" stopColor="#9c7df2"/><stop offset=".55" stopColor="#6247c0"/><stop offset=".77" stopColor="#c1a4ff"/><stop offset="1" stopColor="#7653d6"/></linearGradient><filter id="shadow"><feDropShadow dx="0" dy="25" stdDeviation="15" floodColor="#000" floodOpacity=".65"/></filter></defs><g transform="rotate(-24 300 215)" filter="url(#shadow)"><path d="M300 215C245 145 203 95 146 109C57 130 63 295 149 306C207 313 252 263 300 215C348 167 393 117 451 124C537 135 543 300 454 321C397 335 355 285 300 215Z" fill="none" stroke="url(#ribbon)" strokeWidth="55"/><path d="M300 215C245 145 203 95 146 109C57 130 63 295 149 306C207 313 252 263 300 215" fill="none" stroke="#e7dcff" strokeOpacity=".5" strokeWidth="1.5" transform="translate(0 -23)"/></g></svg>
-    <figcaption><span>{t.visualTag}</span><strong>{t.visualText}</strong><div className="art-bottom"><span>∞</span><span>01 — ∞</span></div></figcaption>
+  return <figure className="hero-scene" aria-label={translations[locale].illustration}>
+    <img src="/assets/atmosphere/gaming-dusk.webp" alt="" width="1536" height="1024" fetchPriority="high"/>
+    <figcaption><span className="scene-mark" aria-hidden="true">∞</span><span>{locale === 'fr' ? 'Un espace pour vos envies numériques.' : 'Ruimte voor jouw digitale wereld.'}</span></figcaption>
   </figure>;
 }
 export function EmptyCatalog({ locale }: { locale: Locale }) {
@@ -41,30 +37,26 @@ export function ProductList({ locale, category }: { locale: Locale; category?: s
 function DraftCatalog({ locale, category }: { locale: Locale; category?: string }) {
   const products = getDraftProducts().filter(p => !category || p.category === category);
   if (!products.length) return <EmptyCatalog locale={locale}/>;
-  const prices = previewPricing.pricesEUR as Record<string,number>;
-  return <CatalogPreview locale={locale} products={products.map(p => ({
-    sku: p.sku, name: p.translations[locale].name.replace(' ? ', ' — '),
-    category: p.category, edition: p.edition, duration: p.duration || '',
-    priceEUR: prices[p.sku] ?? p.priceEUR,
-  }))}/>;
+  return <CatalogPreview locale={locale} products={products} initialCategory={category}/>;
 }
 export function ContactBanner({ locale }: { locale: Locale }) {
   const t = translations[locale];
   return <section className="contact-banner container"><div><span className="eyebrow">{t.contactTag}</span><h2>{t.contactTitle}</h2></div><div><p>{t.contactText}</p><WhatsApp locale={locale} className="button light">{t.talk}</WhatsApp><p className="fineprint">{t.external}</p></div><span className="banner-loop" aria-hidden="true">∞</span></section>;
 }
-export function Home({ locale }: { locale: Locale }) { return <Catalog locale={locale}/>; }
-export function Catalog({ locale, category }: { locale: Locale; category?: string }) {
-  const t = translations[locale], c = catalogCopy[locale];
+export function Home({ locale }: { locale: Locale }) {
+  const t = translations[locale];
   return <>
-    <section className="catalog-intro"><div className="container">
-      <div className="reassurance catalog-reassurance">{t.reassurance.map((text,i) => <div key={text}><span className="reassurance-icon"><Icon name={['chat','shield','check'][i]} size={21}/></span><span>{text}</span></div>)}</div>
-      <div className="catalog-heading"><div><span className="eyebrow">{c.eyebrow}</span><h1>{c.title}</h1><p>{c.intro}</p></div><span className="currency-notice">€ <span>{c.currency}</span></span></div>
-    </div></section>
-    <section className="container catalog-main"><ProductList locale={locale} category={category}/></section>
-    <section className="journey-section"><div className="container"><header className="centered-heading"><span className="eyebrow">{t.journeyTag}</span><h2>{t.journeyTitle.replace('\n',' ')}</h2><p>{t.journeySub}</p></header><div className="purchase-steps">{t.steps.map(([title,text],i)=><article key={title}><span className="step-number">{i+1}</span><h3>{title}</h3><p>{text}</p></article>)}<article className="support-step"><span className="step-number"><Icon name="help" size={22}/></span><h3>{c.support}</h3><p>{c.infoBody}</p><Link href={href(locale,'support')} className="text-link">{t.supportLink}<Icon name="arrow" size={16}/></Link></article></div></div></section>
-    <section className="faq container"><div><span className="eyebrow">{t.faqTag}</span><h2>{t.faqTitle}</h2><Link href={href(locale,'support')} className="text-link">{t.nav[2]}<Icon/></Link></div><div className="faq-list">{t.faqs.map(([q,a])=><details key={q}><summary>{q}<Icon name="plus" size={18}/></summary><p>{a}</p></details>)}</div></section>
+    <section className="hero container"><ConceptArt locale={locale}/><div className="hero-copy"><span className="eyebrow"><span className="purple-line"/>{t.eyebrow}</span><h1>{t.hero1}<br/><span>{t.hero2}</span></h1><p className="hero-intro">{t.intro}</p><div className="hero-actions"><Link className="button dark" href={href(locale,'catalog')}>{t.discover}<Icon/></Link><WhatsApp locale={locale} className="text-link">{t.ask}</WhatsApp></div><p className="fineprint hero-note"><Icon name="chat" size={15}/>{t.external}</p></div></section>
+    <div className="container reassurance">{t.reassurance.map((text,i) => <div key={text}><span className="reassurance-icon"><Icon name={['chat','shield','check'][i]} size={21}/></span><span>{text}</span></div>)}</div>
+    <section className="catalog-section container"><div className="section-heading"><div><span className="eyebrow">{t.catalogEyebrow}</span><h2>{t.catalogTitle}</h2></div><Link className="text-link" href={href(locale,'catalog')}>{t.allProducts}<Icon/></Link></div><ProductList locale={locale}/></section>
+    <section className="journey container"><div className="journey-intro"><span className="eyebrow">{t.journeyTag}</span><h2>{t.journeyTitle}</h2><p>{t.journeySub}</p><Link className="text-link" href={href(locale,'support')}>{t.supportLink}<Icon/></Link></div><div className="journey-steps">{t.steps.map(([title,text],i) => <div className="journey-step" key={title}><span className="step-number">0{i+1}</span><div><h3>{title}</h3><p>{text}</p></div><Icon name={['chat','check','help'][i]} size={25}/></div>)}</div></section>
+    <section className="faq container"><div><span className="eyebrow">{t.faqTag}</span><h2>{t.faqTitle}</h2><Link href={href(locale,'support')} className="text-link">{t.nav[2]}<Icon/></Link></div><div className="faq-list">{t.faqs.map(([q,a]) => <details key={q}><summary>{q}<Icon name="plus" size={18}/></summary><p>{a}</p></details>)}</div></section>
     <ContactBanner locale={locale}/>
   </>;
+}
+export function Catalog({ locale, category }: { locale: Locale; category?: string }) {
+  const t = translations[locale];
+  return <section className="container page-section"><span className="eyebrow">{t.catalogEyebrow}</span><h1 className="page-title">{t.catalogPageTitle}</h1><p className="page-lead">{t.catalogPageText}</p><div className="catalog-toolbar"><span>{getProducts(locale).length || getDraftProducts().length} {locale === 'fr' ? 'référence(s)' : 'product(en)'}</span><Link href={href(locale,'support')} className="text-link">{t.helpChoose}<Icon name="help" size={18}/></Link></div><ProductList locale={locale} category={category}/></section>;
 }
 export function Support({ locale }: { locale: Locale }) {
   const t = translations[locale];
