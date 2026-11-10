@@ -25,6 +25,8 @@ export function getDraftProducts(): DraftProduct[] {
   }));
 }
 export function getProducts(locale: Locale): Product[] {
+  // Spreadsheet rows are preview data and cannot enter the commercial approval path.
+  if ((process.env.CATALOG_SOURCE || 'local') !== 'local') return [];
   return catalog.filter((p): p is Product => !productBlockers(p, reviews.productReviews, locale).length).map(p => ({
     sku: p.sku, slug: p.slug, category: p.category, status: p.status, image: p.image, priceEUR: p.priceEUR,
     edition: p.edition, territory: p.territory, devices: p.devices, duration: p.duration,

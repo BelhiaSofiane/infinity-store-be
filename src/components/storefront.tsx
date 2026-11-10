@@ -1,10 +1,11 @@
 import Link from 'next/link';
 import { translations } from '@/lib/translations';
 import { href, whatsapp, type Locale, type Page } from '@/lib/links';
-import { business, getProducts, getDraftProducts, type Product } from '@/lib/store';
+import { business, getProducts, type Product } from '@/lib/store';
 import { Icon } from './icon';
 import { Navigation } from './navigation';
 import { CatalogPreview } from './catalog-preview';
+import type { CatalogSnapshot } from '@/lib/catalog-types';
 
 export function WhatsApp({ locale, type = 'inquiry', children, className = 'button dark', product }: { locale: Locale; type?: 'inquiry' | 'support' | 'complaint'; children?: React.ReactNode; className?: string; product?: Product }) {
   return <a className={className} href={whatsapp(locale,type,product && { name: product.translations[locale].name, sku: product.sku, edition: product.edition, duration: product.duration })} target="_blank" rel="noopener noreferrer">{children || translations[locale].inquiry}<Icon name="external" size={18}/></a>;
@@ -29,34 +30,38 @@ export function EmptyCatalog({ locale }: { locale: Locale }) {
   const t = translations[locale];
   return <div className="empty-catalog"><div className="empty-art" aria-hidden="true"><div className="empty-square square-back"/><div className="empty-square square-front"><Icon name="grid" size={40}/></div><span className="empty-spark">✳</span></div><div className="empty-copy"><span className="eyebrow muted">{t.emptyTag}</span><h3>{t.emptyTitle}</h3><p>{t.emptyText}</p><WhatsApp locale={locale} className="text-link">{t.emptyLink}</WhatsApp></div><span className="empty-index" aria-hidden="true">∞</span></div>;
 }
-export function ProductList({ locale, category }: { locale: Locale; category?: string }) {
+export function ProductList({ locale, category, snapshot }: { locale: Locale; category?: string; snapshot: CatalogSnapshot }) {
   const products = getProducts(locale).filter(p => !category || p.category === category), t = translations[locale];
-  if (!products.length) return <DraftCatalog locale={locale} category={category}/>;
+  if (!products.length) return <DraftCatalog locale={locale} category={category} snapshot={snapshot}/>;
   return <><nav className="category-links">{[...new Set(getProducts(locale).map(p => p.category))].map(c => <Link key={c} href={href(locale,'catalog') + '/categorie/' + c}>{c}</Link>)}</nav><div className="product-grid">{products.map(p => <article className="product-card" key={p.sku}><img src={p.image} alt={p.translations[locale].name} width="400" height="300"/><h3>{p.translations[locale].name}</h3><p>{p.translations[locale].description}</p><strong>{new Intl.NumberFormat(locale + '-BE',{ style: 'currency', currency: 'EUR' }).format(p.priceEUR)}</strong><p>{p.translations[locale].taxDisclosure}</p><p>{p.translations[locale].conditions}</p><Link href={href(locale,'catalog',p.slug)}>{t.details} →</Link><WhatsApp locale={locale} product={p}/><p className="fineprint">{t.external}</p></article>)}</div></>;
 }
-function DraftCatalog({ locale, category }: { locale: Locale; category?: string }) {
-  const products = getDraftProducts().filter(p => !category || p.category === category);
+function DraftCatalog({ locale, category, snapshot }: { locale: Locale; category?: string; snapshot: CatalogSnapshot }) {
+  const copy = locale === 'fr'
+    ? { title: 'Le catalogue est temporairement indisponible.', text: 'Nous ne pouvons pas confirmer les informations du catalogue pour le moment. Réessayez plus tard ou contactez-nous.' }
+    : { title: 'De catalogus is tijdelijk niet beschikbaar.', text: 'We kunnen de catalogusgegevens momenteel niet bevestigen. Probeer het later opnieuw of neem contact op.' };
+  if (snapshot.status === 'unavailable') return <section className="catalog-unavailable" role="status"><h3>{copy.title}</h3><p>{copy.text}</p><WhatsApp locale={locale} className="text-link"/></section>;
+  const products = snapshot.products.filter(p => !category || p.category === category);
   if (!products.length) return <EmptyCatalog locale={locale}/>;
-  return <CatalogPreview locale={locale} products={products} initialCategory={category}/>;
+  return <CatalogPreview locale={locale} products={products} categories={snapshot.categories} initialCategory={category}/>;
 }
 export function ContactBanner({ locale }: { locale: Locale }) {
   const t = translations[locale];
   return <section className="contact-banner container"><div><span className="eyebrow">{t.contactTag}</span><h2>{t.contactTitle}</h2></div><div><p>{t.contactText}</p><WhatsApp locale={locale} className="button light">{t.talk}</WhatsApp><p className="fineprint">{t.external}</p></div><span className="banner-loop" aria-hidden="true">∞</span></section>;
 }
-export function Home({ locale }: { locale: Locale }) {
+export function Home({ locale, snapshot }: { locale: Locale; snapshot: CatalogSnapshot }) {
   const t = translations[locale];
   return <>
     <section className="hero container"><ConceptArt locale={locale}/><div className="hero-copy"><span className="eyebrow"><span className="purple-line"/>{t.eyebrow}</span><h1>{t.hero1}<br/><span>{t.hero2}</span></h1><p className="hero-intro">{t.intro}</p><div className="hero-actions"><Link className="button dark" href={href(locale,'catalog')}>{t.discover}<Icon/></Link><WhatsApp locale={locale} className="text-link">{t.ask}</WhatsApp></div><p className="fineprint hero-note"><Icon name="chat" size={15}/>{t.external}</p></div></section>
     <div className="container reassurance">{t.reassurance.map((text,i) => <div key={text}><span className="reassurance-icon"><Icon name={['chat','shield','check'][i]} size={21}/></span><span>{text}</span></div>)}</div>
-    <section className="catalog-section container"><div className="section-heading"><div><span className="eyebrow">{t.catalogEyebrow}</span><h2>{t.catalogTitle}</h2></div><Link className="text-link" href={href(locale,'catalog')}>{t.allProducts}<Icon/></Link></div><ProductList locale={locale}/></section>
+    <section className="catalog-section container"><div className="section-heading"><div><span className="eyebrow">{t.catalogEyebrow}</span><h2>{t.catalogTitle}</h2></div><Link className="text-link" href={href(locale,'catalog')}>{t.allProducts}<Icon/></Link></div><ProductList locale={locale} snapshot={snapshot}/></section>
     <section className="journey container"><div className="journey-intro"><span className="eyebrow">{t.journeyTag}</span><h2>{t.journeyTitle}</h2><p>{t.journeySub}</p><Link className="text-link" href={href(locale,'support')}>{t.supportLink}<Icon/></Link></div><div className="journey-steps">{t.steps.map(([title,text],i) => <div className="journey-step" key={title}><span className="step-number">0{i+1}</span><div><h3>{title}</h3><p>{text}</p></div><Icon name={['chat','check','help'][i]} size={25}/></div>)}</div></section>
     <section className="faq container"><div><span className="eyebrow">{t.faqTag}</span><h2>{t.faqTitle}</h2><Link href={href(locale,'support')} className="text-link">{t.nav[2]}<Icon/></Link></div><div className="faq-list">{t.faqs.map(([q,a]) => <details key={q}><summary>{q}<Icon name="plus" size={18}/></summary><p>{a}</p></details>)}</div></section>
     <ContactBanner locale={locale}/>
   </>;
 }
-export function Catalog({ locale, category }: { locale: Locale; category?: string }) {
+export function Catalog({ locale, category, snapshot }: { locale: Locale; category?: string; snapshot: CatalogSnapshot }) {
   const t = translations[locale];
-  return <section className="container page-section"><span className="eyebrow">{t.catalogEyebrow}</span><h1 className="page-title">{t.catalogPageTitle}</h1><p className="page-lead">{t.catalogPageText}</p><div className="catalog-toolbar"><span>{getProducts(locale).length || getDraftProducts().length} {locale === 'fr' ? 'référence(s)' : 'product(en)'}</span><Link href={href(locale,'support')} className="text-link">{t.helpChoose}<Icon name="help" size={18}/></Link></div><ProductList locale={locale} category={category}/></section>;
+  return <section className="container page-section"><span className="eyebrow">{t.catalogEyebrow}</span><h1 className="page-title">{t.catalogPageTitle}</h1><p className="page-lead">{t.catalogPageText}</p><div className="catalog-toolbar"><span>{getProducts(locale).length || snapshot.products.length} {locale === 'fr' ? 'référence(s)' : 'product(en)'}</span><Link href={href(locale,'support')} className="text-link">{t.helpChoose}<Icon name="help" size={18}/></Link></div><ProductList locale={locale} category={category} snapshot={snapshot}/></section>;
 }
 export function Support({ locale }: { locale: Locale }) {
   const t = translations[locale];

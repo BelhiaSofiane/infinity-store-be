@@ -44,4 +44,4 @@ See `docs/IMPLEMENTATION.md`, `docs/RESEARCH.md`, `docs/LAUNCH.md`, `docs/MEASUR
 
 ## Deploy the catalog preview
 
-Import this repository into Vercel or Netlify as a Next.js project and use `npm run build`. No application environment variables are required. Redeploy after pulling the password-gate removal. Any old `PREVIEW_USER` and `PREVIEW_PASSWORD` settings can be deleted; the application no longer reads them.
+Import this repository into Vercel or Netlify as a Next.js project and use `npm run build`. Local-file catalog mode needs no Google credentials. Optional private Google Sheets catalog setup is documented in [docs/GOOGLE-SHEETS.md](docs/GOOGLE-SHEETS.md), with an import workbook in `docs/templates/infinity-store-catalog.xlsx`. Run `npm run catalog:check` before switching `CATALOG_SOURCE` to `google-sheets`. The website requests read-only access, refreshes its validated cache after 60 seconds on demand, and hides unavailable data after five minutes without a successful refresh. Any old `PREVIEW_USER` and `PREVIEW_PASSWORD` settings can be deleted; the application no longer reads them.

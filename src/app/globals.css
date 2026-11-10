@@ -18,6 +18,8 @@ html {
 }
 body {
   margin: 0;
+  position: relative;
+  isolation: isolate;
   min-height: 100vh;
   background:
     radial-gradient(ellipse at 95% 5%, #38407455, transparent 45%),
@@ -29,6 +31,23 @@ body {
   line-height: 1.7;
   -webkit-font-smoothing: antialiased;
 }
+/* Reserve the artwork for empty desktop gutters, outside the content column. */
+@media (min-width: 1200px) {
+  body {
+    --art-gutter: clamp(125px, 11vw, 220px);
+  }
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: -1;
+    background: url('/assets/atmosphere/catalog-side-art.webp') no-repeat center;
+    background-size: 100% auto;
+    mask-image: linear-gradient(to bottom, transparent, #000 16%, #000 70%, transparent 92%);
+  }
+}
+
 a {
   color: inherit;
   text-decoration: none;
@@ -1770,22 +1789,41 @@ h2 {
   }
 }
 .pass-art.pass-poster-frame {
-  min-height: 340px;
-  align-self: stretch;
+  min-height: 0;
+  align-self: start;
   padding: 0;
 }
 .pass-art .pass-poster {
-  position: absolute;
-  inset: 0;
+  display: block;
+  position: static;
   width: 100%;
   max-width: none;
-  height: 300%;
-  object-fit: cover;
-  object-position: center top;
+  height: auto;
+  object-fit: contain;
   filter: none;
 }
-@media (max-width: 680px) {
-  .pass-art.pass-poster-frame {
-    min-height: 230px;
+.pass-feature .pass-content {
+  align-self: center;
+}
+
+@media (min-width: 1200px) {
+  .container {
+    width: calc(100% - var(--art-gutter) * 2 - 40px);
   }
 }
+.catalog-card-content { display: flex; flex-direction: column; flex: 1; width: 100%; min-width: 0; }
+.catalog-description { color: var(--muted); font-size: 12px; line-height: 1.8; margin: 10px 0 18px; overflow-wrap: anywhere; }
+.catalog-stock { display: block; color: var(--muted); font-size: 10px; margin: 0 0 14px; }
+.stock-available { color: var(--cyan); }
+.stock-sold_out { color: #d9b0a0; }
+.duration-options small { display: block; font-size: 9px; }
+.duration-options input:disabled + span { opacity: .55; cursor: not-allowed; }
+.catalog-sold-out { color: var(--muted); background: #ffffff08; border-color: var(--line); cursor: not-allowed; }
+.catalog-unavailable { padding: 30px; border: 1px solid var(--line); background: var(--soft); border-radius: 10px; }
+.catalog-unavailable h3 { font-size: 23px; }
+.catalog-unavailable p { color: var(--muted); margin: 15px 0; }
+.catalog-media-poster { height: auto; }
+.catalog-media-poster img { display: block; width: 100%; height: auto; }
+.pass-content { min-width: 0; }
+.product-card h3, .pass-content h3 { overflow-wrap: anywhere; }
+@media (max-width: 370px) { .catalog-card-content .product-purchase { flex-wrap: wrap; } }
