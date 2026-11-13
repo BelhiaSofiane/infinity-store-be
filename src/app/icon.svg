@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <title>Zakinus Store</title>
+  <defs>
+    <linearGradient id="z" x1="16" y1="16" x2="49" y2="50" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#b6a2ff"/>
+      <stop offset="1" stop-color="#68e5f8"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="15" fill="#0b1223"/>
+  <rect x="1" y="1" width="62" height="62" rx="14" stroke="#9f9cff" stroke-opacity=".35" stroke-width="2"/>
+  <path d="M16 16h33v8L28 42h21v8H16v-8l21-18H16z" fill="url(#z)"/>
+</svg>
