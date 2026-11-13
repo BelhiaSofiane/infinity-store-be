@@ -110,3 +110,38 @@ export const translations = {
     details: 'Bekijk details', inquiry: 'Vraag informatie via WhatsApp', included: 'Inbegrepen ondersteuning bij dit product', compatibility: 'Compatibiliteit', conditions: 'Belangrijke voorwaarden', delivery: 'Levering', withdrawal: 'Herroeping', conformity: 'Conformiteit & rechtsmiddelen', problems: 'Een probleem na een aankoop?', reference: 'Referentie', tax: 'Totaalprijs in EUR',
   },
 };
+
+// The server decides whether payment copy is active; clients receive only a boolean.
+export function getTranslations(locale: 'fr' | 'nl', paymentsEnabled = false) {
+  const base = translations[locale];
+  if (!paymentsEnabled) return base;
+  const payment = locale === 'fr' ? {
+    preview: 'Catalogue',
+    previewNote: 'Paiement externe sur PayPal pour les variantes disponibles avec un lien de paiement.',
+    footerNote: 'Paiement sur PayPal · Vérification et livraison manuelles',
+    draftNotice: 'Les liens de paiement concernent la variante sélectionnée. Vérifiez le produit, la durée et le montant total en EUR sur PayPal avant de payer. Infinity Store vérifie les paiements et assure la livraison manuellement.',
+    catalogSub: 'Explorez les produits et leurs variantes. Les boutons PayPal ouvrent un paiement externe.',
+    emptyText: 'Aucun produit disponible dans cette sélection pour le moment. Contactez-nous pour une question.',
+    policyText: 'Cette politique est encore en préparation. Contactez Infinity Store pour obtenir les informations applicables avant de payer sur PayPal.',
+    storageText: 'Cette application n’ajoute ni outil d’analyse, ni pixel publicitaire, ni cookie ou stockage navigateur. La langue reste dans l’URL. PayPal et WhatsApp ne s’ouvrent qu’en suivant un lien externe. Les traitements de ces services et les journaux de l’hébergeur devront être décrits dans la politique finale.',
+    faq: ['Comment payer ?', 'Choisissez une variante disponible et utilisez son bouton PayPal lorsqu’il est proposé. Le paiement s’effectue sur PayPal. Infinity Store vérifie la transaction et livre manuellement. Ce site ne suit pas le statut du paiement.'],
+    supportBefore: 'Posez une question sur le produit, la compatibilité ou les conditions avant de payer.',
+  } : {
+    preview: 'Catalogus',
+    previewNote: 'Extern betalen bij PayPal voor beschikbare varianten met een betaallink.',
+    footerNote: 'Betalen bij PayPal · Handmatige controle en levering',
+    draftNotice: 'De betaallink hoort bij de geselecteerde variant. Controleer het product, de looptijd en het totaalbedrag in EUR bij PayPal voordat je betaalt. Infinity Store controleert betalingen en levert handmatig.',
+    catalogSub: 'Bekijk de producten en varianten. PayPal-knoppen openen een externe betaalpagina.',
+    emptyText: 'Er zijn momenteel geen producten beschikbaar in deze selectie. Neem contact op als je een vraag hebt.',
+    policyText: 'Dit beleid is nog in voorbereiding. Vraag Infinity Store naar de toepasselijke informatie voordat je bij PayPal betaalt.',
+    storageText: 'Deze applicatie voegt geen analysetools, advertentiepixels, cookies of browseropslag toe. De taal staat in de URL. PayPal en WhatsApp openen alleen via een externe link. De verwerking door deze diensten en hostinglogboeken moeten in het definitieve beleid worden beschreven.',
+    faq: ['Hoe betaal ik?', 'Kies een beschikbare variant en gebruik de PayPal-knop wanneer die wordt getoond. Je betaalt bij PayPal. Infinity Store controleert de transactie en levert handmatig. Deze website volgt de betaalstatus niet.'],
+    supportBefore: 'Stel een vraag over het product, de compatibiliteit of de voorwaarden voordat je betaalt.',
+  };
+  const { faq, supportBefore, ...overrides } = payment;
+  return {
+    ...base, ...overrides,
+    faqs: [faq, ...base.faqs.slice(1)],
+    supportCards: [[base.supportCards[0][0], supportBefore, base.supportCards[0][2]], ...base.supportCards.slice(1)],
+  };
+}

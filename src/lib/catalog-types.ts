@@ -7,6 +7,8 @@ export type CatalogItem = {
   status: "pending_review";
   edition: string;
   priceEUR: number;
+  paypalUrl: string | null;
+  paypalPriceEUR: number | null;
   availability: "available" | "sold_out" | "unconfirmed";
   imageKey: string;
   sortOrder: number;

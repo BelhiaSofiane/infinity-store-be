@@ -37,6 +37,7 @@ Create `.env.local` in the repository folder. This file is ignored by Git. Start
 
 ```dotenv
 CATALOG_SOURCE=local
+PAYPAL_LINKS_ENABLED=false
 GOOGLE_SHEETS_ID=your_spreadsheet_id
 GOOGLE_SERVICE_ACCOUNT_EMAIL=the_client_email_from_your_json
 GOOGLE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----\n"
@@ -83,8 +84,12 @@ If a key is exposed, revoke it in Google Cloud and replace it in local/Vercel se
 | `visible` | Checked/TRUE to show the row; unchecked/FALSE or blank to hide it. |
 | `image_key` | An approved image key from the table below. |
 | `sort_order` | A number; smaller values appear first. |
+| `paypal_url` | Optional column P: the SKU's pre-generated `https://www.paypal.com/ncp/payment/ID` link. |
+| `paypal_price_eur` | Optional column Q: numeric EUR checkout amount. Must match `price_eur` before PayPal is offered. |
 
 The website displays the exact price with two decimal places. For the `.99` effect, enter `24.99` (or `24,99` in a comma-decimal locale) as a number. It does not repeatedly subtract a cent.
+
+See [PayPal setup and rollout](PAYPAL.md) before enabling payments. Sheets without the optional PayPal columns remain compatible. Links are disabled by default, and PayPal prices do not automatically follow sheet edits.
 
 Rows sharing a `group_id` must use the same category, image, base names and descriptions in both languages. Each row keeps its own SKU, edition, variant, price and availability. The lowest variant sort order determines the group's position.
 
@@ -116,7 +121,7 @@ The workbook supplies dropdowns through row 501 and a category range through row
 4. Uncheck a row or delete it and confirm it disappears after a successful refresh.
 5. Add a test category and a hidden test product. Check both language versions before making it visible.
 
-Availability changes are manual. Opening WhatsApp does not reserve or subtract stock. Spreadsheet edits only update the preview catalog and cannot activate checkout, product detail publication, indexing, or commercial approval.
+Availability changes are manual. Opening WhatsApp or PayPal does not reserve or subtract website stock. Spreadsheet edits do not activate payments by themselves: `PAYPAL_LINKS_ENABLED=true` is also required. They do not activate product detail publication, indexing, or commercial approval.
 
 ## Connection problems
 

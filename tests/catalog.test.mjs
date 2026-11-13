@@ -86,7 +86,7 @@ test('Google transport performs one read-only batch for both tabs and typed valu
   const result=await fetchGoogleCatalog({sheetId:'test-sheet'},{now:()=>1234,request:async opts=>{
     calls++; assert.equal(opts.method,'GET');
     const url=new URL(opts.url); assert.equal(url.origin,'https://sheets.googleapis.com');
-    assert.deepEqual(url.searchParams.getAll('ranges'),['Products!A:O','Categories!A:D']);
+    assert.deepEqual(url.searchParams.getAll('ranges'),['Products!A:Q','Categories!A:D']);
     assert.equal(url.searchParams.get('valueRenderOption'),'UNFORMATTED_VALUE');
     return {data:{valueRanges:[{values:s.productRows},{values:s.categoryRows}]}};
   }});

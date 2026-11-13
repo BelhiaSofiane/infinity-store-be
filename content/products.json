@@ -13,7 +13,9 @@
       "nl": {
         "name": "Windows 11 Pro + Office"
       }
-    }
+    },
+    "paypalUrl": "https://www.paypal.com/ncp/payment/L69DJTGEDE8EJ",
+    "paypalPriceEUR": 24.99
   },
   {
     "sku": "iptv-1-an",
@@ -30,7 +32,9 @@
       "nl": {
         "name": "IPTV ? 1 jaar"
       }
-    }
+    },
+    "paypalUrl": "https://www.paypal.com/ncp/payment/W8ZSA7G82FUHQ",
+    "paypalPriceEUR": 34.99
   },
   {
     "sku": "game-pass-2-mois",
@@ -47,7 +51,9 @@
       "nl": {
         "name": "Game Pass ? 2 maanden"
       }
-    }
+    },
+    "paypalUrl": "https://www.paypal.com/ncp/payment/YVAB68EYWD928",
+    "paypalPriceEUR": 24.99
   },
   {
     "sku": "game-pass-85-jours",
@@ -64,7 +70,9 @@
       "nl": {
         "name": "Game Pass ? 85 dagen"
       }
-    }
+    },
+    "paypalUrl": "https://www.paypal.com/ncp/payment/KNLXGGG6XMNSU",
+    "paypalPriceEUR": 34.99
   },
   {
     "sku": "game-pass-120-jours",
@@ -81,7 +89,9 @@
       "nl": {
         "name": "Game Pass ? 120 dagen"
       }
-    }
+    },
+    "paypalUrl": "https://www.paypal.com/ncp/payment/24FMJN2BM2H86",
+    "paypalPriceEUR": 44.99
   },
   {
     "sku": "game-pass-6-mois",
@@ -98,7 +108,9 @@
       "nl": {
         "name": "Game Pass ? 6 maanden"
       }
-    }
+    },
+    "paypalUrl": "https://www.paypal.com/ncp/payment/684VA353XXZNG",
+    "paypalPriceEUR": 59.99
   },
   {
     "sku": "game-pass-8-mois",
@@ -115,7 +127,9 @@
       "nl": {
         "name": "Game Pass ? 8 maanden"
       }
-    }
+    },
+    "paypalUrl": "https://www.paypal.com/ncp/payment/5E9WPJQJ8ATSN",
+    "paypalPriceEUR": 74.99
   },
   {
     "sku": "game-pass-1-an",
@@ -132,6 +146,8 @@
       "nl": {
         "name": "Game Pass ? 1 jaar"
       }
-    }
+    },
+    "paypalUrl": "https://www.paypal.com/ncp/payment/HS6HCVQSSHHDW",
+    "paypalPriceEUR": 99.99
   }
 ]

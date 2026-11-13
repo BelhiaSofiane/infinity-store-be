@@ -5,7 +5,8 @@ import { Shell, Home, Catalog, Support, Contact, ProductDetail } from '@/compone
 import { getProducts, policies, isLaunchReady } from '@/lib/store';
 import { getCatalogSnapshot } from '@/lib/catalog';
 import type { CatalogSnapshot } from '@/lib/catalog-types';
-import { translations } from '@/lib/translations';
+import { getTranslations } from '@/lib/translations';
+import { paypalLinksEnabled } from '@/lib/paypal';
 import { segments, href, type Page, type Locale } from '@/lib/links';
 type Props = { params: Promise<{ locale: string; path?: string[] }> };
 async function catalogForRoute(locale: string, path: string[] = []): Promise<CatalogSnapshot> {
@@ -34,7 +35,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const snapshot = await catalogForRoute(locale,path);
   const route = resolve(locale,path,snapshot);
   if (!route) return { title: locale === 'nl' ? 'Pagina niet beschikbaar | Infinity Store' : 'Page indisponible | Infinity Store' };
-  const t = translations[route.locale];
+  const t = getTranslations(route.locale, paypalLinksEnabled());
   const title = route.slug ? getProducts(route.locale).find(p => p.slug === route.slug)!.translations[route.locale].name : (t.policies as Record<string,string>)[route.page] || t.nav[(['home','catalog','support','contact'] as Page[]).indexOf(route.page)];
   return { title: `${title} | Infinity Store`, description: t.previewNote, robots: { index: false, follow: false } };
 }
@@ -43,7 +44,7 @@ export default async function PageView({ params }: Props) {
   const snapshot = await catalogForRoute(locale,path);
   const route = resolve(locale,path,snapshot);
   if (!route) notFound();
-  const { locale: l, page, slug, category } = route, t = translations[l];
+  const { locale: l, page, slug, category } = route, t = getTranslations(l, paypalLinksEnabled());
   let content;
   if (page === 'home') content = <Home locale={l} snapshot={snapshot}/>;
   else if (page === 'catalog') content = slug ? <ProductDetail locale={l} product={getProducts(l).find(p => p.slug === slug)!}/> : <Catalog locale={l} category={category} snapshot={snapshot}/>;

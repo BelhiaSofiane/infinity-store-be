@@ -1814,6 +1814,11 @@ h2 {
 .catalog-card-content { display: flex; flex-direction: column; flex: 1; width: 100%; min-width: 0; }
 .catalog-description { color: var(--muted); font-size: 12px; line-height: 1.8; margin: 10px 0 18px; overflow-wrap: anywhere; }
 .catalog-stock { display: block; color: var(--muted); font-size: 10px; margin: 0 0 14px; }
+.catalog-actions { display: flex; flex-direction: column; align-items: stretch; gap: 12px; min-width: 0; max-width: 100%; }
+.catalog-actions .button { white-space: normal; text-align: center; }
+.catalog-question { justify-content: center; }
+.paypal-explanation { margin-top: 16px; line-height: 1.7; }
+@media (max-width: 600px) { .product-purchase:has(.paypal-button) { flex-wrap: wrap; gap: 18px; } }
 .stock-available { color: var(--cyan); }
 .stock-sold_out { color: #d9b0a0; }
 .duration-options small { display: block; font-size: 9px; }

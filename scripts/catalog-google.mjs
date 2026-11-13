@@ -49,7 +49,7 @@ export async function fetchGoogleCatalog(
     const url = new URL(
       `https://sheets.googleapis.com/v4/spreadsheets/${config.sheetId}/values:batchGet`,
     );
-    url.searchParams.append("ranges", "Products!A:O");
+    url.searchParams.append("ranges", "Products!A:Q");
     url.searchParams.append("ranges", "Categories!A:D");
     url.searchParams.set("valueRenderOption", "UNFORMATTED_VALUE");
     url.searchParams.set("majorDimension", "ROWS");

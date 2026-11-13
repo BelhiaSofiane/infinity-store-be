@@ -1,4 +1,6 @@
-export const PRODUCT_HEADERS = [
+import { paypalUrl, euroCents } from "./catalog-paypal.mjs";
+
+export const REQUIRED_PRODUCT_HEADERS = [
   "sku",
   "group_id",
   "category_id",
@@ -15,6 +17,8 @@ export const PRODUCT_HEADERS = [
   "image_key",
   "sort_order",
 ];
+export const PAYPAL_HEADERS = ["paypal_url", "paypal_price_eur"];
+export const PRODUCT_HEADERS = [...REQUIRED_PRODUCT_HEADERS, ...PAYPAL_HEADERS];
 export const CATEGORY_HEADERS = [
   "category_id",
   "name_fr",
@@ -52,18 +56,19 @@ const order = (value) =>
   value === "" || value === undefined ? 0 : Number(value);
 const compare = (a, b) => a.sortOrder - b.sortOrder || a.id.localeCompare(b.id);
 
-function records(values, headers, tab) {
+function records(values, headers, tab, optionalHeaders = []) {
   if (!Array.isArray(values) || !Array.isArray(values[0]))
     throw new Error(`schema:${tab}:missing_headers`);
   const actual = values[0].map(text);
-  if (headers.some((h) => actual.filter((x) => x === h).length !== 1))
+  if (headers.some((h) => actual.filter((x) => x === h).length !== 1) ||
+      optionalHeaders.some((h) => actual.filter((x) => x === h).length > 1))
     throw new Error(`schema:${tab}:invalid_headers`);
   return values
     .slice(1)
     .map((cells, index) => ({
       row: index + 2,
       ...Object.fromEntries(
-        headers.map((h) => [h, cells?.[actual.indexOf(h)] ?? ""]),
+        [...headers, ...optionalHeaders].map((h) => [h, cells?.[actual.indexOf(h)] ?? ""]),
       ),
     }))
     .filter((record) => headers.some((h) => record[h] !== ""));
@@ -102,7 +107,7 @@ export function parseCatalog(productValues, categoryValues) {
     .filter((c) => !badCategories.has(c.id))
     .sort(compare);
   const knownCategories = new Set(validCategories.map((c) => c.id));
-  const rows = records(productValues, PRODUCT_HEADERS, "Products");
+  const rows = records(productValues, REQUIRED_PRODUCT_HEADERS, "Products", PAYPAL_HEADERS);
   const skuCounts = new Map(),
     blockedGroups = new Set();
   for (const r of rows) {
@@ -147,6 +152,13 @@ export function parseCatalog(productValues, categoryValues) {
       warn("Products", r.row, "invalid_product");
       continue;
     }
+    const paymentUrl = paypalUrl(r.paypal_url);
+    const paymentCents = euroCents(r.paypal_price_eur);
+    if (r.paypal_url !== "" && !paymentUrl) warn("Products", r.row, "invalid_paypal_url");
+    if (r.paypal_price_eur !== "" && paymentCents === null) warn("Products", r.row, "invalid_paypal_price");
+    if (paymentUrl && r.paypal_price_eur === "") warn("Products", r.row, "missing_paypal_price");
+    if (paymentCents !== null && !paymentUrl && r.paypal_url === "") warn("Products", r.row, "missing_paypal_url");
+    if (paymentCents !== null && paymentCents !== euroCents(price)) warn("Products", r.row, "paypal_price_mismatch");
     products.push({
       sku,
       slug: sku,
@@ -155,6 +167,8 @@ export function parseCatalog(productValues, categoryValues) {
       status: "pending_review",
       edition: text(r.edition),
       priceEUR: Math.round(price * 100) / 100,
+      paypalUrl: paymentUrl,
+      paypalPriceEUR: paymentCents === null ? null : paymentCents / 100,
       availability: r.availability,
       imageKey: text(r.image_key),
       sortOrder: order(r.sort_order),
@@ -213,13 +227,13 @@ export function parseCatalog(productValues, categoryValues) {
 
 export function localCatalog(products) {
   const categoryRows = [
-    CATEGORY_HEADERS,
+    [...CATEGORY_HEADERS],
     ["game-pass", "Gaming", "Gaming", 1],
     ["windows", "Logiciels", "Software", 2],
     ["iptv", "Divertissement", "Entertainment", 3],
   ];
   const productRows = [
-    PRODUCT_HEADERS,
+    [...PRODUCT_HEADERS],
     ...products
       .filter((p) => p.status === "pending_review")
       .map((p, index) => {
@@ -245,6 +259,8 @@ export function localCatalog(products) {
             : p.category === "windows"
               ? 10
               : 20,
+          p.paypalUrl || "",
+          p.paypalPriceEUR ?? "",
         ];
       }),
   ];

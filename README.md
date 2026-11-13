@@ -1,6 +1,6 @@
 # Infinity Store — Next.js catalog preview
 
-Built 9 November 2026. French (`/fr`) and Belgian Dutch (`/nl`), EUR. Next.js App Router, React, TypeScript, CSS. No checkout, accounts, admin, tracking or database.
+Built 9 November 2026. French (`/fr`) and Belgian Dutch (`/nl`), EUR. Next.js App Router, React, TypeScript, CSS. Optional external PayPal checkout links; no accounts, admin, payment tracking or database. Payments are disabled by default; see [PayPal setup](docs/PAYPAL.md).
 
 ## Run
 

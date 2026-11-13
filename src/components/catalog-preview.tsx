@@ -3,8 +3,9 @@
 import { useId, useState } from "react";
 import type { CatalogCategory, CatalogItem } from "@/lib/catalog-types";
 import { IMAGE_LIBRARY } from "../../scripts/catalog-schema.mjs";
+import { paypalCheckoutUrl } from "../../scripts/catalog-paypal.mjs";
 import { whatsapp, type Locale } from "@/lib/links";
-import { translations } from "@/lib/translations";
+import { getTranslations } from "@/lib/translations";
 import { Icon } from "./icon";
 
 const copy = {
@@ -17,6 +18,8 @@ const copy = {
     sold_out: "Épuisé",
     unconfirmed: "Disponibilité à confirmer",
     game: "À chaque joueur, son rythme.",
+    pay: "Payer avec PayPal",
+    checkout: "Le paiement s’ouvre sur PayPal dans un nouvel onglet. Infinity Store vérifie le paiement et assure la livraison manuellement. Ce site ne suit pas le statut du paiement.",
   },
   nl: {
     all: "Alles ontdekken",
@@ -27,6 +30,8 @@ const copy = {
     sold_out: "Uitverkocht",
     unconfirmed: "Beschikbaarheid te bevestigen",
     game: "Voor elke speler een eigen ritme.",
+    pay: "Betalen met PayPal",
+    checkout: "De betaling opent bij PayPal in een nieuw tabblad. Infinity Store controleert de betaling en levert handmatig. Deze website volgt de betaalstatus niet.",
   },
 };
 
@@ -122,10 +127,12 @@ function ProductGroup({
   items,
   categories,
   locale,
+  paymentsEnabled,
 }: {
   items: CatalogItem[];
   categories: CatalogCategory[];
   locale: Locale;
+  paymentsEnabled: boolean;
 }) {
   const [selectedSku, setSelectedSku] = useState<string>();
   const name = useId();
@@ -136,7 +143,8 @@ function ProductGroup({
     items[0];
   const tr = selected.translations[locale],
     c = copy[locale],
-    t = translations[locale];
+    t = getTranslations(locale, paymentsEnabled);
+  const paymentUrl = paypalCheckoutUrl(selected, paymentsEnabled);
   const featured =
     selected.groupId === "game-pass" && selected.imageKey === "game-pass";
   const category =
@@ -201,13 +209,21 @@ function ProductGroup({
             </strong>
             <span className="fineprint">{t.clientPrice}</span>
           </div>
+          <div className="catalog-actions">
+          {paymentUrl && (
+            <a className="button dark paypal-button" href={paymentUrl}
+              target="_blank" rel="noopener noreferrer"
+              aria-label={`${c.pay} : ${inquiryName}`}>
+              {c.pay}<Icon name="external" size={17}/>
+            </a>
+          )}
           {selected.availability === "sold_out" ? (
             <button className="button catalog-sold-out" disabled>
               {c.sold_out}
             </button>
           ) : (
             <a
-              className="button dark"
+              className={paymentUrl ? "text-link catalog-question" : "button dark"}
               href={whatsapp(locale, "inquiry", {
                 name: inquiryName,
                 sku: selected.sku,
@@ -222,7 +238,9 @@ function ProductGroup({
               <Icon name="external" size={17} />
             </a>
           )}
+          </div>
         </div>
+        {paymentUrl && <p className="fineprint paypal-explanation">{c.checkout}</p>}
       </div>
     </article>
   );
@@ -233,11 +251,13 @@ export function CatalogPreview({
   products,
   categories,
   initialCategory,
+  paymentsEnabled = false,
 }: {
   locale: Locale;
   products: CatalogItem[];
   categories: CatalogCategory[];
   initialCategory?: string;
+  paymentsEnabled?: boolean;
 }) {
   const [filter, setFilter] = useState(initialCategory || "all");
   const visibleCategories = categories.filter((c) =>
@@ -280,12 +300,13 @@ export function CatalogPreview({
             items={items}
             categories={categories}
             locale={locale}
+            paymentsEnabled={paymentsEnabled}
           />
         ))}
       </div>
       <p className="draft-notice">
         <Icon name="help" size={17} />
-        <span>{translations[locale].draftNotice}</span>
+        <span>{getTranslations(locale, paymentsEnabled).draftNotice}</span>
       </p>
     </div>
   );
