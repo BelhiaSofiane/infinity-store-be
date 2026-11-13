@@ -66,11 +66,11 @@ test('every product variant has a protected PayPal link, matching price and What
     for (const locale of ['fr','nl']) {
       const html=render(data,locale,true);
       assert.ok(html.includes(`href="${product.paypalUrl}"`));
-      assert.equal((html.match(/class="button dark paypal-button"/g)||[]).length,1);
+      assert.equal((html.match(/class="button paypal-button"/g)||[]).length,1);
       assert.ok(html.includes(product.priceEUR.toFixed(2).replace('.',',')));
       assert.ok(html.includes(encodeURIComponent(product.sku)));
       assert.ok(html.includes(encodeURIComponent(data.products.find(p=>p.sku===product.sku).translations[locale].variant)));
-      assert.match(html,/class="button dark paypal-button"[^>]*target="_blank" rel="noopener noreferrer"/);
+      assert.match(html,/class="button paypal-button"[^>]*target="_blank" rel="noopener noreferrer"/);
       assert.ok(html.includes('src="/assets/payments/paypal-mark.svg"'));
       assert.ok(html.includes(locale==='fr'?'Payer avec PayPal':'Betalen met PayPal'));
       assert.ok(html.includes('https://wa.me/'));

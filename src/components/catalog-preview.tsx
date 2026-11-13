@@ -188,7 +188,7 @@ function ProductGroup({
           </div>
           <div className="catalog-actions">
           {paymentUrl && (
-            <a className="button dark paypal-button" href={paymentUrl}
+            <a className="button paypal-button" href={paymentUrl}
               target="_blank" rel="noopener noreferrer"
               aria-label={`${c.pay} : ${inquiryName}`}>
               <span className="paypal-button-mark"><img src="/assets/payments/paypal-mark.svg" alt="" width="22" height="22"/></span>
@@ -201,7 +201,7 @@ function ProductGroup({
             </button>
           ) : (
             <a
-              className={paymentUrl ? "text-link catalog-question" : "button dark"}
+              className={paymentUrl ? "button catalog-question" : "button dark catalog-question"}
               href={whatsapp(locale, "inquiry", {
                 name: inquiryName,
                 sku: selected.sku,
