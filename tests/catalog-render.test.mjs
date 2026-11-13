@@ -32,7 +32,7 @@ test('all sold-out groups render stock notices and disabled inquiry controls wit
   assert.ok(html.includes('Épuisé'));
   assert.equal((html.match(/class="button catalog-sold-out" disabled=""/g)||[]).length,3);
   assert.ok(!html.includes('https://wa.me/'));
-  assert.ok(html.includes('Gamepass%20post.png'));
+  assert.ok(html.includes('/assets/catalog/game-pass-subscriptions.jpg'));
 });
 test('first available Game Pass variant is selected and its price and inquiry stay aligned',()=>{
   const s=seed(); s.productRows.find(r=>r[0]==='game-pass-6-mois')[11]='available';
@@ -71,6 +71,7 @@ test('every product variant has a protected PayPal link, matching price and What
       assert.ok(html.includes(encodeURIComponent(product.sku)));
       assert.ok(html.includes(encodeURIComponent(data.products.find(p=>p.sku===product.sku).translations[locale].variant)));
       assert.match(html,/class="button dark paypal-button"[^>]*target="_blank" rel="noopener noreferrer"/);
+      assert.ok(html.includes('src="/assets/payments/paypal-mark.svg"'));
       assert.ok(html.includes(locale==='fr'?'Payer avec PayPal':'Betalen met PayPal'));
       assert.ok(html.includes('https://wa.me/'));
     }
@@ -94,14 +95,12 @@ test('disabled payments, local stock, sold-out, missing or mismatched links neve
   assert.ok(!render({products:[],categories:[]},'fr',true).includes('paypal-button'));
 });
 
-test('enabled copy explains manual delivery; disabled copy retains the preview',async()=>{
+test('customer copy stays consistent without demo, unavailable-purchase or country references',async()=>{
   const {getTranslations}=await import(translations);
   for(const locale of ['fr','nl']) {
     const disabled=getTranslations(locale), enabled=getTranslations(locale,true);
-    assert.notEqual(enabled.previewNote,disabled.previewNote);
-    assert.notEqual(enabled.footerNote,disabled.footerNote);
-    assert.notEqual(enabled.faqs[0][1],disabled.faqs[0][1]);
-    assert.notEqual(enabled.policyText,disabled.policyText);
+    assert.deepEqual(enabled,disabled);
+    assert.doesNotMatch(JSON.stringify(enabled),/algérie|algerije|algeria|aperçu|privé|voorbeel|vente non activée|verkoop niet geactiveerd|aucun achat n’est possible|aankopen zijn niet mogelijk/i);
     assert.ok(enabled.faqs[0][1].includes('PayPal'));
     assert.ok(enabled.draftNotice.includes('PayPal'));
   }

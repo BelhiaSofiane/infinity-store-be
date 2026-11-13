@@ -19,7 +19,7 @@ const copy = {
     unconfirmed: "Disponibilité à confirmer",
     game: "À chaque joueur, son rythme.",
     pay: "Payer avec PayPal",
-    checkout: "Le paiement s’ouvre sur PayPal dans un nouvel onglet. Infinity Store vérifie le paiement et assure la livraison manuellement. Ce site ne suit pas le statut du paiement.",
+    checkout: "Finalisez votre paiement sur PayPal dans un nouvel onglet.",
   },
   nl: {
     all: "Alles ontdekken",
@@ -31,7 +31,7 @@ const copy = {
     unconfirmed: "Beschikbaarheid te bevestigen",
     game: "Voor elke speler een eigen ritme.",
     pay: "Betalen met PayPal",
-    checkout: "De betaling opent bij PayPal in een nieuw tabblad. Infinity Store controleert de betaling en levert handmatig. Deze website volgt de betaalstatus niet.",
+    checkout: "Rond je betaling af bij PayPal in een nieuw tabblad.",
   },
 };
 
@@ -49,13 +49,13 @@ function Artwork({
         className={
           featured
             ? "pass-art pass-poster-frame"
-            : "catalog-media catalog-media-poster"
+            : `catalog-media catalog-media-poster${imageKey === "iptv" ? " catalog-media-iptv-poster" : ""}`
         }
       >
         <img
           className="pass-poster"
           src={image.src}
-          alt="Xbox Game Pass"
+          alt={image.label}
           width={image.width}
           height={image.height}
           loading="lazy"
@@ -214,6 +214,7 @@ function ProductGroup({
             <a className="button dark paypal-button" href={paymentUrl}
               target="_blank" rel="noopener noreferrer"
               aria-label={`${c.pay} : ${inquiryName}`}>
+              <span className="paypal-button-mark"><img src="/assets/payments/paypal-mark.svg" alt="" width="22" height="22"/></span>
               {c.pay}<Icon name="external" size={17}/>
             </a>
           )}

@@ -22,16 +22,17 @@ body {
   isolation: isolate;
   min-height: 100vh;
   background:
-    radial-gradient(ellipse at 95% 5%, #38407455, transparent 45%),
-    radial-gradient(ellipse at 0% 55%, #304c6050, transparent 50%),
-    linear-gradient(145deg, #0a172c 0%, #191934 42%, #102c36 75%, #090e1c 100%);
+    radial-gradient(ellipse 65vw 900px at 100% 0%, #171b3633, transparent),
+    radial-gradient(ellipse 60vw 900px at 0% 500px, #12324422, transparent),
+    #040f22;
   color: var(--ink);
   font-family: var(--font-body), sans-serif;
   font-size: 14px;
   line-height: 1.7;
   -webkit-font-smoothing: antialiased;
 }
-/* Reserve the artwork for empty desktop gutters, outside the content column. */
+/* One proportional artwork plane, blended only into the empty desktop gutters.
+   Masking its center keeps the header and content on the same continuous base. */
 @media (min-width: 1200px) {
   body {
     --art-gutter: clamp(125px, 11vw, 220px);
@@ -39,12 +40,15 @@ body {
   body::before {
     content: "";
     position: fixed;
-    inset: 0;
+    inset: 0 0 auto;
+    aspect-ratio: 1672 / 941;
     pointer-events: none;
     z-index: -1;
-    background: url('/assets/atmosphere/catalog-side-art.webp') no-repeat center;
-    background-size: 100% auto;
-    mask-image: linear-gradient(to bottom, transparent, #000 16%, #000 70%, transparent 92%);
+    background: url('/assets/atmosphere/catalog-side-art.webp') no-repeat center / 100% 100%;
+    mask-image:
+      linear-gradient(to bottom, transparent, #000 20%, #000 72%, transparent),
+      linear-gradient(to right, #000, #000 5%, transparent 15%, transparent 85%, #000 95%, #000);
+    mask-composite: intersect;
   }
 }
 
@@ -118,20 +122,6 @@ h3 {
 }
 .skip-link:focus {
   top: 12px;
-}
-.utility {
-  background: #070b14;
-  border-bottom: 1px solid var(--line);
-  color: var(--muted);
-  font-size: 10px;
-}
-.utility-inner {
-  min-height: 32px;
-  display: flex;
-  align-items: center;
-}
-.utility-detail {
-  color: #8f9aaf;
 }
 .status-dot {
   width: 5px;
@@ -887,19 +877,6 @@ h2 {
   margin-top: 20px;
   line-height: 1.9;
 }
-.footer-country {
-  display: block;
-  color: #8795ad;
-  font-size: 10px;
-  margin-top: 18px;
-}
-.footer-small {
-  font-size: 10px;
-  color: #8795ad;
-  line-height: 1.8;
-  max-width: 220px;
-  margin: 15px 0;
-}
 .footer-bottom {
   display: flex;
   justify-content: space-between;
@@ -1311,6 +1288,7 @@ h2 {
     font-size: 10px;
   }
   .catalog-media {
+    --catalog-media-height: 185px;
     height: 185px;
   }
   .journey,
@@ -1341,13 +1319,6 @@ h2 {
 @media (max-width: 680px) {
   .container {
     width: calc(100% - 40px);
-  }
-  .utility-inner {
-    min-height: 28px;
-    font-size: 9px;
-  }
-  .utility-detail {
-    display: none;
   }
   .header {
     height: 78px;
@@ -1818,6 +1789,19 @@ h2 {
 .catalog-actions .button { white-space: normal; text-align: center; }
 .catalog-question { justify-content: center; }
 .paypal-explanation { margin-top: 16px; line-height: 1.7; }
+.paypal-button { gap: 10px; }
+.paypal-button-mark { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; width: 30px; height: 30px; background: #fff; border-radius: 6px; }
+.paypal-button-mark img { display: block; width: 22px; height: 22px; }
+.payment-methods { margin-top: 22px; }
+.payment-methods .payment-methods-label { display: block; color: var(--muted); font-size: 11px; margin: 0 0 10px; }
+.payment-methods-options { display: flex; align-items: center; gap: 12px; }
+.payment-methods .paypal-badge { display: inline-flex; align-items: center; gap: 6px; padding: 7px 12px; margin: 0; background: #fff; border: 1px solid #dce5f0; border-radius: 7px; line-height: 1; }
+.payment-methods .paypal-badge > span { display: inline; margin: 0; color: #002991; font-size: 16px; font-weight: 700; letter-spacing: -.5px; }
+.paypal-badge img { display: block; width: 24px; height: 24px; }
+.payment-methods .payment-currency { display: inline; color: var(--muted); font-size: 11px; margin: 0; }
+.payment-methods .payment-methods-note { color: var(--muted); font-size: 10px; line-height: 1.6; margin: 10px 0 0; }
+.contact-details .payment-methods { margin-top: 0; }
+.contact-phone { display: inline-flex; align-items: center; gap: 12px; font-size: 21px; font-weight: 500; }
 @media (max-width: 600px) { .product-purchase:has(.paypal-button) { flex-wrap: wrap; gap: 18px; } }
 .stock-available { color: var(--cyan); }
 .stock-sold_out { color: #d9b0a0; }
@@ -1829,6 +1813,10 @@ h2 {
 .catalog-unavailable p { color: var(--muted); margin: 15px 0; }
 .catalog-media-poster { height: auto; }
 .catalog-media-poster img { display: block; width: 100%; height: auto; }
+@media (min-width: 681px) {
+  .catalog-media-iptv-poster { height: var(--catalog-media-height, 220px); background: #080d19; }
+  .catalog-media-iptv-poster img { height: 100%; object-fit: contain; }
+}
 .pass-content { min-width: 0; }
 .product-card h3, .pass-content h3 { overflow-wrap: anywhere; }
 @media (max-width: 370px) { .catalog-card-content .product-purchase { flex-wrap: wrap; } }

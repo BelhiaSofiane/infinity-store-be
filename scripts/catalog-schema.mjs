@@ -29,10 +29,10 @@ export const CATEGORY_HEADERS = [
 export const IMAGE_LIBRARY = Object.freeze({
   "game-pass": {
     kind: "poster",
-    label: "Game Pass poster",
-    src: "/assets/catalog/Gamepass%20post.png",
-    width: 896,
-    height: 1200,
+    label: "Xbox Game Pass",
+    src: "/assets/catalog/game-pass-subscriptions.jpg",
+    width: 1024,
+    height: 1024,
   },
   "windows-office": {
     kind: "windows",
@@ -42,11 +42,11 @@ export const IMAGE_LIBRARY = Object.freeze({
     height: 563,
   },
   iptv: {
-    kind: "iptv",
-    label: "Original IPTV illustration",
-    src: "",
-    width: 240,
-    height: 150,
+    kind: "poster",
+    label: "IPTV — 12 months",
+    src: "/assets/catalog/iptv-subscription.jpg",
+    width: 1024,
+    height: 1024,
   },
 });
 const id = (value) =>

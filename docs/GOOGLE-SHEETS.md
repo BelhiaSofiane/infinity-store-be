@@ -103,9 +103,11 @@ For example, add category `accessories` with labels `Accessoires` / `Accessoires
 
 | `image_key` | Artwork |
 |---|---|
-| `game-pass` | Your complete supplied Game Pass poster |
+| `game-pass` | Supplied square Xbox Game Pass subscriptions poster, including all six prices and durations |
 | `windows-office` | Existing Windows 11 + Office artwork |
-| `iptv` | Original IPTV TV/play illustration |
+| `iptv` | Supplied square IPTV subscription poster, shown in full without cropping |
+
+The optional `image_preview` column R is for viewing artwork in the spreadsheet only. The IPTV row and all six Game Pass rows contain permanent Drive image preview chips in the live sheet; the import workbook embeds thumbnails. The website uses `image_key=iptv` or `image_key=game-pass` and its local image library; it does not load spreadsheet preview links.
 
 New images must be added to the website's local library first. Ask for the artwork to be added, then use its new image key. External image URLs, Drive links and arbitrary filenames are not accepted. The special `game-pass` group with the `game-pass` image retains its featured layout; other groups use reusable cards and selectors.
 
