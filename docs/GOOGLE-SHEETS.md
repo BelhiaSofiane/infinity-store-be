@@ -75,7 +75,7 @@ If a key is exposed, revoke it in Google Cloud and replace it in local/Vercel se
 | `sku` | Unique lowercase-hyphen identifier for one variant. Keep it stable. |
 | `group_id` | Shared identifier for variants shown on one card. |
 | `category_id` | An ID already listed on Categories. |
-| `name_fr`, `name_nl` | Base product name in each language, such as Game Pass. |
+| `name_fr`, `name_nl` | Base product name in each language, such as Xbox Game Pass Ultimate. |
 | `description_fr`, `description_nl` | Optional plain-text descriptions. |
 | `variant_fr`, `variant_nl` | Variant label, such as `2 mois` and `2 maanden`. Required and unique in each language when a group has multiple variants. |
 | `edition` | Optional edition information included in the WhatsApp inquiry. |
@@ -103,11 +103,11 @@ For example, add category `accessories` with labels `Accessoires` / `Accessoires
 
 | `image_key` | Artwork |
 |---|---|
-| `game-pass` | Supplied square Xbox Game Pass subscriptions poster, including all six prices and durations |
-| `windows-office` | Existing Windows 11 + Office artwork |
-| `iptv` | Supplied square IPTV subscription poster, shown in full without cropping |
+| `game-pass` | Zakinus Store Xbox Game Pass Ultimate poster, including all six prices and durations |
+| `windows-office` | Zakinus Store Windows 11 Pro + Office poster |
+| `iptv` | Zakinus Store IPTV subscription poster, shown in full without cropping |
 
-The optional `image_preview` column R is for viewing artwork in the spreadsheet only. The IPTV row and all six Game Pass rows contain permanent Drive image preview chips in the live sheet; the import workbook embeds thumbnails. The website uses `image_key=iptv` or `image_key=game-pass` and its local image library; it does not load spreadsheet preview links.
+The optional `image_preview` column R is for viewing artwork in the spreadsheet only. All eight product rows contain permanent Drive image preview chips in the live sheet; the import workbook embeds thumbnails. The website uses the stable `iptv`, `game-pass`, or `windows-office` image key and its local image library; it does not load spreadsheet preview links.
 
 New images must be added to the website's local library first. Ask for the artwork to be added, then use its new image key. External image URLs, Drive links and arbitrary filenames are not accepted. The special `game-pass` group with the `game-pass` image retains its featured layout; other groups use reusable cards and selectors.
 

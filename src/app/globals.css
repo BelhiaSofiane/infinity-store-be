@@ -1789,8 +1789,10 @@ h2 {
 .catalog-actions .button { white-space: normal; text-align: center; }
 .catalog-question { justify-content: center; }
 .paypal-explanation { margin-top: 16px; line-height: 1.7; }
-.paypal-button { gap: 10px; }
-.paypal-button-mark { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; width: 30px; height: 30px; background: #fff; border-radius: 6px; }
+.button.paypal-button { gap: 10px; background: #ffc439; border-color: #ffc439; color: #003087; border-radius: 999px; font-weight: 700; }
+.button.paypal-button:hover { background: #f2ba36; border-color: #f2ba36; color: #002991; }
+.product-purchase .paypal-button { min-height: 48px; padding: 12px 18px; }
+.paypal-button-mark { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; width: 22px; height: 22px; }
 .paypal-button-mark img { display: block; width: 22px; height: 22px; }
 .payment-methods { margin-top: 22px; }
 .payment-methods .payment-methods-label { display: block; color: var(--muted); font-size: 11px; margin: 0 0 10px; }
@@ -1802,7 +1804,10 @@ h2 {
 .payment-methods .payment-methods-note { color: var(--muted); font-size: 10px; line-height: 1.6; margin: 10px 0 0; }
 .contact-details .payment-methods { margin-top: 0; }
 .contact-phone { display: inline-flex; align-items: center; gap: 12px; font-size: 21px; font-weight: 500; }
-@media (max-width: 600px) { .product-purchase:has(.paypal-button) { flex-wrap: wrap; gap: 18px; } }
+@media (max-width: 600px) {
+  .product-purchase:has(.paypal-button) { flex-wrap: wrap; gap: 18px; }
+  .catalog-actions:has(.paypal-button) { width: 100%; }
+}
 .stock-available { color: var(--cyan); }
 .stock-sold_out { color: #d9b0a0; }
 .duration-options small { display: block; font-size: 9px; }
@@ -1814,9 +1819,19 @@ h2 {
 .catalog-media-poster { height: auto; }
 .catalog-media-poster img { display: block; width: 100%; height: auto; }
 @media (min-width: 681px) {
-  .catalog-media-iptv-poster { height: var(--catalog-media-height, 220px); background: #080d19; }
-  .catalog-media-iptv-poster img { height: 100%; object-fit: contain; }
+  .catalog-media-poster { height: var(--catalog-media-height, 220px); background: #080d19; }
+  .catalog-media-poster img { height: 100%; object-fit: contain; }
 }
 .pass-content { min-width: 0; }
 .product-card h3, .pass-content h3 { overflow-wrap: anywhere; }
 @media (max-width: 370px) { .catalog-card-content .product-purchase { flex-wrap: wrap; } }
+
+/* Store identity. */
+.brand .brand-symbol,
+.header .brand .brand-symbol,
+.footer .brand .brand-symbol {
+  font-size: 30px;
+  line-height: 1;
+  margin-top: 0;
+  letter-spacing: -2px;
+}

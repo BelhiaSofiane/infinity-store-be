@@ -62,29 +62,6 @@ function Artwork({
         />
       </div>
     );
-  if (image.kind === "windows")
-    return (
-      <div className="catalog-media catalog-media-windows">
-        <img
-          className="windows-art"
-          src={image.src}
-          alt="Windows 11"
-          width={image.width}
-          height={image.height}
-          loading="lazy"
-        />
-        <div className="office-strip">
-          <span>+</span>
-          <img
-            src="/assets/catalog/office-logo.jpg"
-            alt="Microsoft Office"
-            width="768"
-            height="331"
-            loading="lazy"
-          />
-        </div>
-      </div>
-    );
   return (
     <div className="catalog-media catalog-media-iptv">
       <svg

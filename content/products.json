@@ -8,10 +8,12 @@
     "priceEUR": 24.99,
     "translations": {
       "fr": {
-        "name": "Windows 11 Pro + Office"
+        "name": "Windows 11 Pro + Office",
+        "description": "Windows 11 Pro et Microsoft Office réunis dans une seule offre pour votre PC. Retrouvez les outils essentiels pour travailler et organiser vos documents. Notre équipe vous aide à vérifier la compatibilité et l’édition Office."
       },
       "nl": {
-        "name": "Windows 11 Pro + Office"
+        "name": "Windows 11 Pro + Office",
+        "description": "Windows 11 Pro en Microsoft Office samen in één aanbod voor je pc. Voor je dagelijkse werk en het beheren van documenten. Ons team helpt je met vragen over compatibiliteit en de Office-editie."
       }
     },
     "paypalUrl": "https://www.paypal.com/ncp/payment/L69DJTGEDE8EJ",
@@ -27,10 +29,12 @@
     "priceEUR": 34.99,
     "translations": {
       "fr": {
-        "name": "IPTV ? 1 an"
+        "name": "IPTV ? 1 an",
+        "description": "Un abonnement IPTV de 12 mois pour votre divertissement TV. Notre équipe vous renseigne sur la compatibilité de votre appareil et les modalités de mise en service."
       },
       "nl": {
-        "name": "IPTV ? 1 jaar"
+        "name": "IPTV ? 1 jaar",
+        "description": "Een IPTV-abonnement van 12 maanden voor tv en entertainment. Neem contact op met ons team voor informatie over apparaatcompatibiliteit en hoe je het abonnement in gebruik neemt."
       }
     },
     "paypalUrl": "https://www.paypal.com/ncp/payment/W8ZSA7G82FUHQ",
@@ -41,15 +45,17 @@
     "slug": "game-pass-2-mois",
     "category": "game-pass",
     "status": "pending_review",
-    "edition": "",
+    "edition": "Ultimate",
     "duration": "2 mois",
     "priceEUR": 24.99,
     "translations": {
       "fr": {
-        "name": "Game Pass ? 2 mois"
+        "name": "Xbox Game Pass Ultimate ? 2 mois",
+        "description": "Xbox Game Pass Ultimate vous donne accès à plus de 500 jeux sur console, PC et appareils compatibles. Le catalogue évolue et les jeux disponibles varient selon la plateforme et la région. Choisissez votre durée pour consulter le tarif correspondant."
       },
       "nl": {
-        "name": "Game Pass ? 2 maanden"
+        "name": "Xbox Game Pass Ultimate ? 2 maanden",
+        "description": "Met Xbox Game Pass Ultimate krijg je toegang tot meer dan 500 games op console, pc en ondersteunde apparaten. Het aanbod verandert en de beschikbare games verschillen per platform en regio. Kies je looptijd om de bijbehorende prijs te bekijken."
       }
     },
     "paypalUrl": "https://www.paypal.com/ncp/payment/YVAB68EYWD928",
@@ -60,15 +66,17 @@
     "slug": "game-pass-85-jours",
     "category": "game-pass",
     "status": "pending_review",
-    "edition": "",
+    "edition": "Ultimate",
     "duration": "85 jours",
     "priceEUR": 34.99,
     "translations": {
       "fr": {
-        "name": "Game Pass ? 85 jours"
+        "name": "Xbox Game Pass Ultimate ? 85 jours",
+        "description": "Xbox Game Pass Ultimate vous donne accès à plus de 500 jeux sur console, PC et appareils compatibles. Le catalogue évolue et les jeux disponibles varient selon la plateforme et la région. Choisissez votre durée pour consulter le tarif correspondant."
       },
       "nl": {
-        "name": "Game Pass ? 85 dagen"
+        "name": "Xbox Game Pass Ultimate ? 85 dagen",
+        "description": "Met Xbox Game Pass Ultimate krijg je toegang tot meer dan 500 games op console, pc en ondersteunde apparaten. Het aanbod verandert en de beschikbare games verschillen per platform en regio. Kies je looptijd om de bijbehorende prijs te bekijken."
       }
     },
     "paypalUrl": "https://www.paypal.com/ncp/payment/KNLXGGG6XMNSU",
@@ -79,15 +87,17 @@
     "slug": "game-pass-120-jours",
     "category": "game-pass",
     "status": "pending_review",
-    "edition": "",
+    "edition": "Ultimate",
     "duration": "120 jours",
     "priceEUR": 44.99,
     "translations": {
       "fr": {
-        "name": "Game Pass ? 120 jours"
+        "name": "Xbox Game Pass Ultimate ? 120 jours",
+        "description": "Xbox Game Pass Ultimate vous donne accès à plus de 500 jeux sur console, PC et appareils compatibles. Le catalogue évolue et les jeux disponibles varient selon la plateforme et la région. Choisissez votre durée pour consulter le tarif correspondant."
       },
       "nl": {
-        "name": "Game Pass ? 120 dagen"
+        "name": "Xbox Game Pass Ultimate ? 120 dagen",
+        "description": "Met Xbox Game Pass Ultimate krijg je toegang tot meer dan 500 games op console, pc en ondersteunde apparaten. Het aanbod verandert en de beschikbare games verschillen per platform en regio. Kies je looptijd om de bijbehorende prijs te bekijken."
       }
     },
     "paypalUrl": "https://www.paypal.com/ncp/payment/24FMJN2BM2H86",
@@ -98,15 +108,17 @@
     "slug": "game-pass-6-mois",
     "category": "game-pass",
     "status": "pending_review",
-    "edition": "",
+    "edition": "Ultimate",
     "duration": "6 mois",
     "priceEUR": 59.99,
     "translations": {
       "fr": {
-        "name": "Game Pass ? 6 mois"
+        "name": "Xbox Game Pass Ultimate ? 6 mois",
+        "description": "Xbox Game Pass Ultimate vous donne accès à plus de 500 jeux sur console, PC et appareils compatibles. Le catalogue évolue et les jeux disponibles varient selon la plateforme et la région. Choisissez votre durée pour consulter le tarif correspondant."
       },
       "nl": {
-        "name": "Game Pass ? 6 maanden"
+        "name": "Xbox Game Pass Ultimate ? 6 maanden",
+        "description": "Met Xbox Game Pass Ultimate krijg je toegang tot meer dan 500 games op console, pc en ondersteunde apparaten. Het aanbod verandert en de beschikbare games verschillen per platform en regio. Kies je looptijd om de bijbehorende prijs te bekijken."
       }
     },
     "paypalUrl": "https://www.paypal.com/ncp/payment/684VA353XXZNG",
@@ -117,15 +129,17 @@
     "slug": "game-pass-8-mois",
     "category": "game-pass",
     "status": "pending_review",
-    "edition": "",
+    "edition": "Ultimate",
     "duration": "8 mois",
     "priceEUR": 74.99,
     "translations": {
       "fr": {
-        "name": "Game Pass ? 8 mois"
+        "name": "Xbox Game Pass Ultimate ? 8 mois",
+        "description": "Xbox Game Pass Ultimate vous donne accès à plus de 500 jeux sur console, PC et appareils compatibles. Le catalogue évolue et les jeux disponibles varient selon la plateforme et la région. Choisissez votre durée pour consulter le tarif correspondant."
       },
       "nl": {
-        "name": "Game Pass ? 8 maanden"
+        "name": "Xbox Game Pass Ultimate ? 8 maanden",
+        "description": "Met Xbox Game Pass Ultimate krijg je toegang tot meer dan 500 games op console, pc en ondersteunde apparaten. Het aanbod verandert en de beschikbare games verschillen per platform en regio. Kies je looptijd om de bijbehorende prijs te bekijken."
       }
     },
     "paypalUrl": "https://www.paypal.com/ncp/payment/5E9WPJQJ8ATSN",
@@ -136,15 +150,17 @@
     "slug": "game-pass-1-an",
     "category": "game-pass",
     "status": "pending_review",
-    "edition": "",
+    "edition": "Ultimate",
     "duration": "1 an",
     "priceEUR": 99.99,
     "translations": {
       "fr": {
-        "name": "Game Pass ? 1 an"
+        "name": "Xbox Game Pass Ultimate ? 1 an",
+        "description": "Xbox Game Pass Ultimate vous donne accès à plus de 500 jeux sur console, PC et appareils compatibles. Le catalogue évolue et les jeux disponibles varient selon la plateforme et la région. Choisissez votre durée pour consulter le tarif correspondant."
       },
       "nl": {
-        "name": "Game Pass ? 1 jaar"
+        "name": "Xbox Game Pass Ultimate ? 1 jaar",
+        "description": "Met Xbox Game Pass Ultimate krijg je toegang tot meer dan 500 games op console, pc en ondersteunde apparaten. Het aanbod verandert en de beschikbare games verschillen per platform en regio. Kies je looptijd om de bijbehorende prijs te bekijken."
       }
     },
     "paypalUrl": "https://www.paypal.com/ncp/payment/HS6HCVQSSHHDW",

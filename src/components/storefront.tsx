@@ -29,12 +29,12 @@ export function Shell({ locale, page, slug, children }: { locale: Locale; page: 
   const t = siteTranslations(locale);
   return <>
     <a className="skip-link" href="#main">{t.skip}</a>
-    <header className="header container"><Link className="brand" href={href(locale)} aria-label="Infinity Store"><span className="brand-symbol">∞</span><span>infinity<span className="brand-store">store</span><span className="brand-dot">.</span></span></Link><Navigation locale={locale} page={page} slug={slug}/><WhatsApp locale={locale} className="button header-cta">{t.ask}<span className="sr-only"> WhatsApp</span></WhatsApp></header>
+    <header className="header container"><Link className="brand" href={href(locale)} aria-label="Zakinus Store"><span className="brand-symbol" aria-hidden="true">Z</span><span>Zakinus<span className="brand-store"> Store</span><span className="brand-dot">.</span></span></Link><Navigation locale={locale} page={page} slug={slug}/><WhatsApp locale={locale} className="button header-cta">{t.ask}<span className="sr-only"> WhatsApp</span></WhatsApp></header>
     <main id="main">{children}</main>
     <footer className="footer">
       <div className="container footer-grid">
         <div className="footer-brand">
-          <Link className="brand" href={href(locale)}><span className="brand-symbol">∞</span><span>infinity<span className="brand-store">store</span>.</span></Link>
+          <Link className="brand" href={href(locale)}><span className="brand-symbol" aria-hidden="true">Z</span><span>Zakinus<span className="brand-store"> Store</span>.</span></Link>
           <p>{t.footerAbout}</p>
           <PaymentMethods locale={locale}/>
         </div>
@@ -42,19 +42,19 @@ export function Shell({ locale, page, slug, children }: { locale: Locale; page: 
         <div><h2>{t.information}</h2>{Object.entries(t.policies).map(([key,label]) => <Link key={key} href={href(locale,key as Page)}>{label}</Link>)}</div>
         <div><h2>{t.contact}</h2><a href={whatsapp(locale)} target="_blank" rel="noopener noreferrer">+213 549 26 03 83 <Icon name="external" size={14}/></a><Link href={href(locale === 'fr' ? 'nl' : 'fr', page, slug)}>{locale === 'fr' ? 'Nederlands' : 'Français'} <Icon name="arrow" size={14}/></Link></div>
       </div>
-      <div className="container footer-bottom"><span>© {new Date().getFullYear()} Infinity Store</span><span>FR / NL · EUR</span></div>
+      <div className="container footer-bottom"><span>© {new Date().getFullYear()} Zakinus Store</span><span>FR / NL · EUR</span></div>
     </footer>
   </>;
 }
 export function ConceptArt({ locale }: { locale: Locale }) {
   return <figure className="hero-scene" aria-label={siteTranslations(locale).illustration}>
     <img src="/assets/atmosphere/gaming-dusk.webp" alt="" width="1536" height="1024" fetchPriority="high"/>
-    <figcaption><span className="scene-mark" aria-hidden="true">∞</span><span>{locale === 'fr' ? 'Un espace pour vos envies numériques.' : 'Ruimte voor jouw digitale wereld.'}</span></figcaption>
+    <figcaption><span className="scene-mark" aria-hidden="true">Z</span><span>{locale === 'fr' ? 'Un espace pour vos envies numériques.' : 'Ruimte voor jouw digitale wereld.'}</span></figcaption>
   </figure>;
 }
 export function EmptyCatalog({ locale }: { locale: Locale }) {
   const t = siteTranslations(locale);
-  return <div className="empty-catalog"><div className="empty-art" aria-hidden="true"><div className="empty-square square-back"/><div className="empty-square square-front"><Icon name="grid" size={40}/></div><span className="empty-spark">✳</span></div><div className="empty-copy"><span className="eyebrow muted">{t.emptyTag}</span><h3>{t.emptyTitle}</h3><p>{t.emptyText}</p><WhatsApp locale={locale} className="text-link">{t.emptyLink}</WhatsApp></div><span className="empty-index" aria-hidden="true">∞</span></div>;
+  return <div className="empty-catalog"><div className="empty-art" aria-hidden="true"><div className="empty-square square-back"/><div className="empty-square square-front"><Icon name="grid" size={40}/></div><span className="empty-spark">✳</span></div><div className="empty-copy"><span className="eyebrow muted">{t.emptyTag}</span><h3>{t.emptyTitle}</h3><p>{t.emptyText}</p><WhatsApp locale={locale} className="text-link">{t.emptyLink}</WhatsApp></div><span className="empty-index" aria-hidden="true">Z</span></div>;
 }
 export function ProductList({ locale, category, snapshot }: { locale: Locale; category?: string; snapshot: CatalogSnapshot }) {
   const products = getProducts(locale).filter(p => !category || p.category === category), t = siteTranslations(locale);
@@ -72,7 +72,7 @@ function DraftCatalog({ locale, category, snapshot }: { locale: Locale; category
 }
 export function ContactBanner({ locale }: { locale: Locale }) {
   const t = siteTranslations(locale);
-  return <section className="contact-banner container"><div><span className="eyebrow">{t.contactTag}</span><h2>{t.contactTitle}</h2></div><div><p>{t.contactText}</p><WhatsApp locale={locale} className="button light">{t.talk}</WhatsApp><p className="fineprint">{t.external}</p></div><span className="banner-loop" aria-hidden="true">∞</span></section>;
+  return <section className="contact-banner container"><div><span className="eyebrow">{t.contactTag}</span><h2>{t.contactTitle}</h2></div><div><p>{t.contactText}</p><WhatsApp locale={locale} className="button light">{t.talk}</WhatsApp><p className="fineprint">{t.external}</p></div><span className="banner-loop" aria-hidden="true">Z</span></section>;
 }
 export function Home({ locale, snapshot }: { locale: Locale; snapshot: CatalogSnapshot }) {
   const t = siteTranslations(locale);

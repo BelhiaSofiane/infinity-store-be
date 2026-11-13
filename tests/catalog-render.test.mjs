@@ -32,7 +32,7 @@ test('all sold-out groups render stock notices and disabled inquiry controls wit
   assert.ok(html.includes('Épuisé'));
   assert.equal((html.match(/class="button catalog-sold-out" disabled=""/g)||[]).length,3);
   assert.ok(!html.includes('https://wa.me/'));
-  assert.ok(html.includes('/assets/catalog/game-pass-subscriptions.jpg'));
+  assert.ok(html.includes('/assets/catalog/zakinus-game-pass-ultimate.png'));
 });
 test('first available Game Pass variant is selected and its price and inquiry stay aligned',()=>{
   const s=seed(); s.productRows.find(r=>r[0]==='game-pass-6-mois')[11]='available';
