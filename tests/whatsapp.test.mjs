@@ -11,7 +11,7 @@ test('French and Dutch inquiry/support/complaint messages are separate and safel
     assert.equal(new Set(urls).size,3);
     for (const value of urls) {
       const url = new URL(value);
-      assert.equal(url.origin+url.pathname,'https://wa.me/213549260383');
+      assert.equal(url.origin+url.pathname,'https://wa.me/447391276335');
       assert.equal(url.searchParams.size,1);
       assert.ok(!value.includes(' '));
     }

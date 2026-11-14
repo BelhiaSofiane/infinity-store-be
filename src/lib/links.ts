@@ -12,5 +12,5 @@ export function whatsapp(locale: Locale, type: 'inquiry' | 'support' | 'complain
   };
   let message: string = messages[locale][type];
   if (product) message += ` ${product.name} · SKU: ${product.sku} · ${product.edition}${product.duration ? ' · ' + product.duration : ''}`;
-  return 'https://wa.me/213549260383?text=' + encodeURIComponent(message);
+  return 'https://wa.me/447391276335?text=' + encodeURIComponent(message);
 }

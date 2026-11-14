@@ -21,7 +21,7 @@ while (pending.length) {
     if (url.origin === origin && !url.hash && !seen.has(url.pathname)) pending.push(url.pathname);
     if (url.hostname === 'wa.me') {
       whatsappLinks++;
-      assert.equal(url.pathname,'/213549260383');
+      assert.equal(url.pathname,'/447391276335');
       assert.ok(url.searchParams.get('text').startsWith(path.startsWith('/nl') ? 'Hallo Infinity Store' : 'Bonjour Infinity Store'));
       assert.ok(!url.searchParams.get('text').includes('undefined'));
     }

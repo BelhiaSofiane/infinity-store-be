@@ -40,7 +40,7 @@ export function Shell({ locale, page, slug, children }: { locale: Locale; page: 
         </div>
         <div><h2>{t.explore}</h2>{(['home','catalog','support','contact'] as const).map((p,i) => <Link key={p} href={href(locale,p)}>{t.nav[i]}</Link>)}</div>
         <div><h2>{t.information}</h2>{Object.entries(t.policies).map(([key,label]) => <Link key={key} href={href(locale,key as Page)}>{label}</Link>)}</div>
-        <div><h2>{t.contact}</h2><a href={whatsapp(locale)} target="_blank" rel="noopener noreferrer">+213 549 26 03 83 <Icon name="external" size={14}/></a><Link href={href(locale === 'fr' ? 'nl' : 'fr', page, slug)}>{locale === 'fr' ? 'Nederlands' : 'Français'} <Icon name="arrow" size={14}/></Link></div>
+        <div><h2>{t.contact}</h2><a href={whatsapp(locale)} target="_blank" rel="noopener noreferrer">+44 7391 276335 <Icon name="external" size={14}/></a><Link href={href(locale === 'fr' ? 'nl' : 'fr', page, slug)}>{locale === 'fr' ? 'Nederlands' : 'Français'} <Icon name="arrow" size={14}/></Link></div>
       </div>
       <div className="container footer-bottom"><span>© {new Date().getFullYear()} Zakinus Store</span><span>FR / NL · EUR</span></div>
     </footer>
@@ -95,7 +95,7 @@ export function Support({ locale }: { locale: Locale }) {
 }
 export function Contact({ locale }: { locale: Locale }) {
   const t = siteTranslations(locale);
-  return <section className="container page-section"><span className="eyebrow">{t.contact}</span><h1 className="page-title">{t.sellerTitle}</h1><p className="page-lead">{t.sellerText}</p><div className="contact-layout"><div className="contact-details"><div><span>{t.phone}</span><a className="contact-phone" href={whatsapp(locale)} target="_blank" rel="noopener noreferrer">+213 549 26 03 83 <Icon name="external" size={18}/></a></div><PaymentMethods locale={locale}/></div><div className="contact-panel"><Icon name="chat" size={34}/><h2>{t.talk}</h2><WhatsApp locale={locale}/><p className="fineprint">{t.external}</p><Link href={href(locale,'support')} className="text-link">{t.nav[2]}<Icon/></Link></div></div></section>;
+  return <section className="container page-section"><span className="eyebrow">{t.contact}</span><h1 className="page-title">{t.sellerTitle}</h1><p className="page-lead">{t.sellerText}</p><div className="contact-layout"><div className="contact-details"><div><span>{t.phone}</span><a className="contact-phone" href={whatsapp(locale)} target="_blank" rel="noopener noreferrer">+44 7391 276335 <Icon name="external" size={18}/></a></div><PaymentMethods locale={locale}/></div><div className="contact-panel"><Icon name="chat" size={34}/><h2>{t.talk}</h2><WhatsApp locale={locale}/><p className="fineprint">{t.external}</p><Link href={href(locale,'support')} className="text-link">{t.nav[2]}<Icon/></Link></div></div></section>;
 }
 export function ProductDetail({ locale, product: p }: { locale: Locale; product: Product }) {
   const t = siteTranslations(locale), copy = p.translations[locale];
