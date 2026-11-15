@@ -5,7 +5,7 @@ import policies from '../../content/policies.json';
 import reviews from '../../private/reviews.json';
 import { productBlockers, siteBlockers } from '../../scripts/validation.mjs';
 export { business, policies };
-export type Locale = 'fr' | 'nl';
+export type Locale = 'fr' | 'en';
 export type Product = {
   sku: string; slug: string; category: string; status: string; image: string; priceEUR: number;
   edition: string; territory: string; devices: string; duration?: string;
@@ -21,7 +21,7 @@ export function getDraftProducts(): DraftProduct[] {
   return catalog.filter(p => p.status === 'pending_review').map(p => ({
     sku: p.sku, slug: p.slug, category: p.category, status: p.status,
     priceEUR: p.priceEUR, edition: p.edition, duration: p.duration,
-    translations: { fr: { name: p.translations.fr.name }, nl: { name: p.translations.nl.name } },
+    translations: { fr: { name: p.translations.fr.name }, en: { name: p.translations.en.name } },
   }));
 }
 export function getProducts(locale: Locale): Product[] {

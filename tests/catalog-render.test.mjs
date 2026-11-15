@@ -36,11 +36,11 @@ test('all sold-out groups render stock notices and disabled inquiry controls wit
 });
 test('first available Game Pass variant is selected and its price and inquiry stay aligned',()=>{
   const s=seed(); s.productRows.find(r=>r[0]==='game-pass-6-mois')[11]='available';
-  const html=render(parseCatalog(s.productRows,s.categoryRows),'nl');
+  const html=render(parseCatalog(s.productRows,s.categoryRows),'en');
   assert.match(html,/checked="" value="game-pass-6-mois"|value="game-pass-6-mois" checked=""/);
-  assert.ok(html.includes('59,99'));
+  assert.ok(html.includes('59.99'));
   assert.ok(html.includes('SKU%3A%20game-pass-6-mois'));
-  assert.ok(html.includes('6%20maanden'));
+  assert.ok(html.includes('6%20months'));
 });
 test('new categories render from data and spreadsheet HTML is escaped as plain text',()=>{
   const s=seed(); s.categoryRows.push(['accessories','Accessoires','Accessoires',4]);
@@ -63,16 +63,16 @@ test('every product variant has a protected PayPal link, matching price and What
     const s=seed();
     s.productRows.find(r=>r[0]===product.sku)[11]='available';
     const data=parseCatalog(s.productRows,s.categoryRows);
-    for (const locale of ['fr','nl']) {
+    for (const locale of ['fr','en']) {
       const html=render(data,locale,true);
       assert.ok(html.includes(`href="${product.paypalUrl}"`));
       assert.equal((html.match(/class="button paypal-button"/g)||[]).length,1);
-      assert.ok(html.includes(product.priceEUR.toFixed(2).replace('.',',')));
+      assert.ok(html.includes((locale==='fr'?product.priceEUR.toFixed(2).replace('.',','):product.priceEUR.toFixed(2))));
       assert.ok(html.includes(encodeURIComponent(product.sku)));
       assert.ok(html.includes(encodeURIComponent(data.products.find(p=>p.sku===product.sku).translations[locale].variant)));
       assert.match(html,/class="button paypal-button"[^>]*target="_blank" rel="noopener noreferrer"/);
       assert.ok(html.includes('src="/assets/payments/paypal-mark.svg"'));
-      assert.ok(html.includes(locale==='fr'?'Payer avec PayPal':'Betalen met PayPal'));
+      assert.ok(html.includes(locale==='fr'?'Payer avec PayPal':'Pay with PayPal'));
       assert.ok(html.includes('https://wa.me/'));
     }
   }
@@ -97,7 +97,7 @@ test('disabled payments, local stock, sold-out, missing or mismatched links neve
 
 test('customer copy stays consistent without demo, unavailable-purchase or country references',async()=>{
   const {getTranslations}=await import(translations);
-  for(const locale of ['fr','nl']) {
+  for(const locale of ['fr','en']) {
     const disabled=getTranslations(locale), enabled=getTranslations(locale,true);
     assert.deepEqual(enabled,disabled);
     assert.doesNotMatch(JSON.stringify(enabled),/algérie|algerije|algeria|aperçu|privé|voorbeel|vente non activée|verkoop niet geactiveerd|aucun achat n’est possible|aankopen zijn niet mogelijk/i);

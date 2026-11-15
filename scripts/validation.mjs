@@ -26,7 +26,7 @@ export function siteBlockers(business, policies, reviews) {
   if (business.publicOrigin && !/^https:\/\/[^/]+$/.test(business.publicOrigin)) errors.push('site: publicOrigin must be a real HTTPS origin');
   for (const key of ['taxAssessment','privacyAssessment','withdrawalAssessment','durableConfirmationProcess','paymentAndFulfillment','algerianObligationsReview','accessibilityReview']) if (!reviewIsValid(business[key], reviews.siteReviews)) errors.push(`site: unreviewed ${key}`);
   if (!business.support.escalationOwner || !business.support.humanLanguages.length || !reviewIsValid(business.support.reviewReference, reviews.siteReviews)) errors.push('site: support operations unconfirmed');
-  for (const locale of ['fr','nl']) {
+  for (const locale of ['fr','en']) {
     const policy = policies.locales[locale];
     for (const key of ['legal','terms','privacy','storage','returns','delivery','accessibility']) if (!present(policy[key])) errors.push(`${locale}: missing ${key} policy`);
     if (!reviewIsValid(policy.reviewReference, reviews.siteReviews)) errors.push(`${locale}: policy review pending`);

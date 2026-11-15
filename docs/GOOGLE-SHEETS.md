@@ -75,9 +75,9 @@ If a key is exposed, revoke it in Google Cloud and replace it in local/Vercel se
 | `sku` | Unique lowercase-hyphen identifier for one variant. Keep it stable. |
 | `group_id` | Shared identifier for variants shown on one card. |
 | `category_id` | An ID already listed on Categories. |
-| `name_fr`, `name_nl` | Base product name in each language, such as Xbox Game Pass Ultimate. |
-| `description_fr`, `description_nl` | Optional plain-text descriptions. |
-| `variant_fr`, `variant_nl` | Variant label, such as `2 mois` and `2 maanden`. Required and unique in each language when a group has multiple variants. |
+| `name_fr`, `name_en` | Base product name in each language, such as Xbox Game Pass Ultimate. |
+| `description_fr`, `description_en` | Optional plain-text descriptions. |
+| `variant_fr`, `variant_en` | Variant label, such as `2 mois` and `2 months`. Required and unique in each language when a group has multiple variants. |
 | `edition` | Optional edition information included in the WhatsApp inquiry. |
 | `price_eur` | A numeric, non-negative EUR price with at most two decimals. Use your Sheets locale's decimal separator. |
 | `availability` | `available` or `sold_out`. Update manually after sales. |
@@ -95,7 +95,7 @@ Rows sharing a `group_id` must use the same category, image, base names and desc
 
 ### Categories
 
-Add `category_id`, `name_fr`, `name_nl`, and `sort_order`. IDs use lowercase letters, numbers and single hyphens. New categories appear automatically when they contain a visible, valid product.
+Add `category_id`, `name_fr`, `name_en`, and `sort_order`. IDs use lowercase letters, numbers and single hyphens. New categories appear automatically when they contain a visible, valid product.
 
 For example, add category `accessories` with labels `Accessoires` / `Accessoires`, then use `accessories` in a new product row. Add the category before the product.
 

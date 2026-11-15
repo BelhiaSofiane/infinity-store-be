@@ -40,16 +40,16 @@ export function Shell({ locale, page, slug, children }: { locale: Locale; page: 
         </div>
         <div><h2>{t.explore}</h2>{(['home','catalog','support','contact'] as const).map((p,i) => <Link key={p} href={href(locale,p)}>{t.nav[i]}</Link>)}</div>
         <div><h2>{t.information}</h2>{Object.entries(t.policies).map(([key,label]) => <Link key={key} href={href(locale,key as Page)}>{label}</Link>)}</div>
-        <div><h2>{t.contact}</h2><a href={whatsapp(locale)} target="_blank" rel="noopener noreferrer">+44 7391 276335 <Icon name="external" size={14}/></a><Link href={href(locale === 'fr' ? 'nl' : 'fr', page, slug)}>{locale === 'fr' ? 'Nederlands' : 'Français'} <Icon name="arrow" size={14}/></Link></div>
+        <div><h2>{t.contact}</h2><a href={whatsapp(locale)} target="_blank" rel="noopener noreferrer">+44 7391 276335 <Icon name="external" size={14}/></a><Link href={href(locale === 'fr' ? 'en' : 'fr', page, slug)}>{locale === 'fr' ? 'English' : 'Français'} <Icon name="arrow" size={14}/></Link></div>
       </div>
-      <div className="container footer-bottom"><span>© {new Date().getFullYear()} Zakinus Store</span><span>FR / NL · EUR</span></div>
+      <div className="container footer-bottom"><span>© {new Date().getFullYear()} Zakinus Store</span><span>FR / EN · EUR</span></div>
     </footer>
   </>;
 }
 export function ConceptArt({ locale }: { locale: Locale }) {
   return <figure className="hero-scene" aria-label={siteTranslations(locale).illustration}>
     <img src="/assets/atmosphere/gaming-dusk.webp" alt="" width="1536" height="1024" fetchPriority="high"/>
-    <figcaption><span className="scene-mark" aria-hidden="true">Z</span><span>{locale === 'fr' ? 'Un espace pour vos envies numériques.' : 'Ruimte voor jouw digitale wereld.'}</span></figcaption>
+    <figcaption><span className="scene-mark" aria-hidden="true">Z</span><span>{locale === 'fr' ? 'Un espace pour vos envies numériques.' : 'Space for your digital world.'}</span></figcaption>
   </figure>;
 }
 export function EmptyCatalog({ locale }: { locale: Locale }) {
@@ -59,12 +59,12 @@ export function EmptyCatalog({ locale }: { locale: Locale }) {
 export function ProductList({ locale, category, snapshot }: { locale: Locale; category?: string; snapshot: CatalogSnapshot }) {
   const products = getProducts(locale).filter(p => !category || p.category === category), t = siteTranslations(locale);
   if (!products.length) return <DraftCatalog locale={locale} category={category} snapshot={snapshot}/>;
-  return <><nav className="category-links">{[...new Set(getProducts(locale).map(p => p.category))].map(c => <Link key={c} href={href(locale,'catalog') + '/categorie/' + c}>{c}</Link>)}</nav><div className="product-grid">{products.map(p => <article className="product-card" key={p.sku}><img src={p.image} alt={p.translations[locale].name} width="400" height="300"/><h3>{p.translations[locale].name}</h3><p>{p.translations[locale].description}</p><strong>{new Intl.NumberFormat(locale + '-BE',{ style: 'currency', currency: 'EUR' }).format(p.priceEUR)}</strong><p>{p.translations[locale].taxDisclosure}</p><p>{p.translations[locale].conditions}</p><Link href={href(locale,'catalog',p.slug)}>{t.details} →</Link><WhatsApp locale={locale} product={p}/><p className="fineprint">{t.external}</p></article>)}</div></>;
+  return <><nav className="category-links">{[...new Set(getProducts(locale).map(p => p.category))].map(c => <Link key={c} href={href(locale,'catalog') + (locale === 'fr' ? '/categorie/' : '/category/') + c}>{c}</Link>)}</nav><div className="product-grid">{products.map(p => <article className="product-card" key={p.sku}><img src={p.image} alt={p.translations[locale].name} width="400" height="300"/><h3>{p.translations[locale].name}</h3><p>{p.translations[locale].description}</p><strong>{new Intl.NumberFormat(locale === 'en' ? 'en-GB' : 'fr-BE',{ style: 'currency', currency: 'EUR' }).format(p.priceEUR)}</strong><p>{p.translations[locale].taxDisclosure}</p><p>{p.translations[locale].conditions}</p><Link href={href(locale,'catalog',p.slug)}>{t.details} →</Link><WhatsApp locale={locale} product={p}/><p className="fineprint">{t.external}</p></article>)}</div></>;
 }
 function DraftCatalog({ locale, category, snapshot }: { locale: Locale; category?: string; snapshot: CatalogSnapshot }) {
   const copy = locale === 'fr'
     ? { title: 'Le catalogue est temporairement indisponible.', text: 'Nous ne pouvons pas confirmer les informations du catalogue pour le moment. Réessayez plus tard ou contactez-nous.' }
-    : { title: 'De catalogus is tijdelijk niet beschikbaar.', text: 'We kunnen de catalogusgegevens momenteel niet bevestigen. Probeer het later opnieuw of neem contact op.' };
+    : { title: 'The catalogue is temporarily unavailable.', text: 'We cannot confirm the catalogue information right now. Please try again later or contact us.' };
   if (snapshot.status === 'unavailable') return <section className="catalog-unavailable" role="status"><h3>{copy.title}</h3><p>{copy.text}</p><WhatsApp locale={locale} className="text-link"/></section>;
   const products = snapshot.products.filter(p => !category || p.category === category);
   if (!products.length) return <EmptyCatalog locale={locale}/>;
@@ -99,5 +99,5 @@ export function Contact({ locale }: { locale: Locale }) {
 }
 export function ProductDetail({ locale, product: p }: { locale: Locale; product: Product }) {
   const t = siteTranslations(locale), copy = p.translations[locale];
-  return <section className="container page-section product-detail"><img src={p.image} alt={copy.name} width="600" height="450"/><div><span className="eyebrow">{t.reference} {p.sku}</span><h1 className="page-title">{copy.name}</h1><p>{copy.description}</p><p className="price">{new Intl.NumberFormat(locale + '-BE',{ style:'currency',currency:'EUR' }).format(p.priceEUR)}</p><p>{copy.taxDisclosure}</p><p>{copy.conditions} · {p.edition} · {p.territory} · {p.duration}</p><WhatsApp locale={locale} product={p}/><p className="fineprint">{t.external}</p><Link href={href(locale,'support')} className="text-link">{t.helpChoose}<Icon/></Link><aside className="assistance-panel"><h2>{t.included}</h2><p>{copy.assistance}</p><Link href={href(locale,'support')}>{t.problems} →</Link></aside>{(['compatibility','delivery','withdrawal','conformity'] as const).map(key => <div key={key}><h2>{t[key]}</h2><p>{copy[key]}</p></div>)}{p.manufacturer && <p>{p.model} · {p.manufacturer} · {p.euResponsiblePerson} · {p.safety}</p>}</div></section>;
+  return <section className="container page-section product-detail"><img src={p.image} alt={copy.name} width="600" height="450"/><div><span className="eyebrow">{t.reference} {p.sku}</span><h1 className="page-title">{copy.name}</h1><p>{copy.description}</p><p className="price">{new Intl.NumberFormat(locale === 'en' ? 'en-GB' : 'fr-BE',{ style:'currency',currency:'EUR' }).format(p.priceEUR)}</p><p>{copy.taxDisclosure}</p><p>{copy.conditions} · {p.edition} · {p.territory} · {p.duration}</p><WhatsApp locale={locale} product={p}/><p className="fineprint">{t.external}</p><Link href={href(locale,'support')} className="text-link">{t.helpChoose}<Icon/></Link><aside className="assistance-panel"><h2>{t.included}</h2><p>{copy.assistance}</p><Link href={href(locale,'support')}>{t.problems} →</Link></aside>{(['compatibility','delivery','withdrawal','conformity'] as const).map(key => <div key={key}><h2>{t[key]}</h2><p>{copy[key]}</p></div>)}{p.manufacturer && <p>{p.model} · {p.manufacturer} · {p.euResponsiblePerson} · {p.safety}</p>}</div></section>;
 }

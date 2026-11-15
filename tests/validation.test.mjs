@@ -13,7 +13,7 @@ test('client prices are recorded while incomplete offers remain unpublished', ()
   assert.equal(new Set(products.map(p => p.slug)).size,8);
   for (const product of products) {
     assert.equal(product.status,'pending_review');
-    for (const locale of ['fr','nl']) {
+    for (const locale of ['fr','en']) {
       assert.ok(product.translations[locale].name);
       assert.ok(productBlockers(product,[],locale).includes('not approved'));
       assert.ok(productBlockers(product,[],locale).includes('missing current evidence review'));
@@ -37,8 +37,8 @@ test('expired, future, incomplete or invalid evidence is rejected', () => {
   }
 });
 test('expired IPTV rights and missing physical safety information block publication', () => {
-  assert.ok(productBlockers({ category:'iptv', status:'approved', rightsScope:'Belgium', rightsExpiry:'2020-01-01' },[review],'nl').some(e => e.includes('content rights')));
-  assert.ok(productBlockers({ category:'android-boxes' },[review],'nl').includes('missing physical information euResponsiblePerson'));
+  assert.ok(productBlockers({ category:'iptv', status:'approved', rightsScope:'Belgium', rightsExpiry:'2020-01-01' },[review],'en').some(e => e.includes('content rights')));
+  assert.ok(productBlockers({ category:'android-boxes' },[review],'en').includes('missing physical information euResponsiblePerson'));
 });
 test('private evidence is never imported by a client component', () => {
   const nav = readFileSync(new URL('../src/components/navigation.tsx',import.meta.url),'utf8');

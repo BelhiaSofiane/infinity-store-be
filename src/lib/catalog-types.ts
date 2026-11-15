@@ -1,4 +1,4 @@
-export type CatalogLocale = "fr" | "nl";
+export type CatalogLocale = "fr" | "en";
 export type CatalogItem = {
   sku: string;
   slug: string;

@@ -54,7 +54,7 @@ export const getCatalogSnapshot = cache(async (): Promise<CatalogSnapshot> => {
           throw new Error(`catalog:${code}`);
         }
       },
-      ["catalog-sheets-v2-paypal", fingerprint],
+      ["catalog-sheets-v3-english", fingerprint],
       { revalidate: 60 },
     );
     return publicSnapshot(await load()) as CatalogSnapshot;

@@ -5,11 +5,11 @@ export const REQUIRED_PRODUCT_HEADERS = [
   "group_id",
   "category_id",
   "name_fr",
-  "name_nl",
+  "name_en",
   "description_fr",
-  "description_nl",
+  "description_en",
   "variant_fr",
-  "variant_nl",
+  "variant_en",
   "edition",
   "price_eur",
   "availability",
@@ -22,7 +22,7 @@ export const PRODUCT_HEADERS = [...REQUIRED_PRODUCT_HEADERS, ...PAYPAL_HEADERS];
 export const CATEGORY_HEADERS = [
   "category_id",
   "name_fr",
-  "name_nl",
+  "name_en",
   "sort_order",
 ];
 // Public artwork metadata only. This module is safe to import in client components.
@@ -59,7 +59,8 @@ const compare = (a, b) => a.sortOrder - b.sortOrder || a.id.localeCompare(b.id);
 function records(values, headers, tab, optionalHeaders = []) {
   if (!Array.isArray(values) || !Array.isArray(values[0]))
     throw new Error(`schema:${tab}:missing_headers`);
-  const actual = values[0].map(text);
+  // Accept pre-migration header names while the live sheet is upgraded.
+  const actual = values[0].map(h => text(h).replace(/^(name|description|variant)_nl$/, "$1_en"));
   if (headers.some((h) => actual.filter((x) => x === h).length !== 1) ||
       optionalHeaders.some((h) => actual.filter((x) => x === h).length > 1))
     throw new Error(`schema:${tab}:invalid_headers`);
@@ -86,7 +87,7 @@ export function parseCatalog(productValues, categoryValues) {
       !id(key) ||
       key === "all" ||
       !text(r.name_fr) ||
-      !text(r.name_nl) ||
+      !text(r.name_en) ||
       !Number.isFinite(order(r.sort_order))
     ) {
       warn("Categories", r.row, "invalid_category");
@@ -99,7 +100,7 @@ export function parseCatalog(productValues, categoryValues) {
     categoryIds.add(key);
     categories.push({
       id: key,
-      translations: { fr: text(r.name_fr), nl: text(r.name_nl) },
+      translations: { fr: text(r.name_fr), en: text(r.name_en) },
       sortOrder: order(r.sort_order),
     });
   }
@@ -139,7 +140,7 @@ export function parseCatalog(productValues, categoryValues) {
       !id(groupId) ||
       !knownCategories.has(text(r.category_id)) ||
       !text(r.name_fr) ||
-      !text(r.name_nl) ||
+      !text(r.name_en) ||
       !Object.hasOwn(IMAGE_LIBRARY, text(r.image_key)) ||
       !["available", "sold_out"].includes(r.availability) ||
       typeof price !== "number" ||
@@ -178,10 +179,10 @@ export function parseCatalog(productValues, categoryValues) {
           description: text(r.description_fr),
           variant: text(r.variant_fr),
         },
-        nl: {
-          name: text(r.name_nl),
-          description: text(r.description_nl),
-          variant: text(r.variant_nl),
+        en: {
+          name: text(r.name_en),
+          description: text(r.description_en),
+          variant: text(r.variant_en),
         },
       },
     });
@@ -192,9 +193,9 @@ export function parseCatalog(productValues, categoryValues) {
       p.category,
       p.imageKey,
       p.translations.fr.name,
-      p.translations.nl.name,
+      p.translations.en.name,
       p.translations.fr.description,
-      p.translations.nl.description,
+      p.translations.en.description,
     ]);
     if (groups.has(p.groupId) && groups.get(p.groupId) !== signature) {
       blockedGroups.add(p.groupId);
@@ -207,9 +208,9 @@ export function parseCatalog(productValues, categoryValues) {
     if (
       group.length > 1 &&
       (group.some(
-        (p) => !p.translations.fr.variant || !p.translations.nl.variant,
+        (p) => !p.translations.fr.variant || !p.translations.en.variant,
       ) ||
-        ["fr", "nl"].some(
+        ["fr", "en"].some(
           (l) =>
             new Set(group.map((p) => p.translations[l].variant)).size !==
             group.length,
@@ -244,11 +245,11 @@ export function localCatalog(products) {
           p.category === "game-pass" ? "game-pass" : p.sku,
           p.category,
           split("fr")[0],
-          split("nl")[0],
+          split("en")[0],
           p.translations.fr.description || "",
-          p.translations.nl.description || "",
+          p.translations.en.description || "",
           split("fr")[1] || "",
-          split("nl")[1] || "",
+          split("en")[1] || "",
           p.edition || "",
           p.priceEUR,
           "sold_out",

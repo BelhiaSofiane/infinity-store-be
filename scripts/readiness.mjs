@@ -6,7 +6,7 @@ const site = siteBlockers(business, policies, reviews);
 console.log('COMMERCIAL READINESS — ' + new Date().toISOString());
 console.log('Site-wide blockers:\n' + site.map(x => '  - ' + x).join('\n'));
 let approved = 0;
-for (const p of products) for (const locale of ['fr','nl']) {
+for (const p of products) for (const locale of ['fr','en']) {
   const errors = productBlockers(p, reviews.productReviews, locale);
   console.log(`${p.sku}/${locale}: ${errors.length ? errors.join('; ') : 'eligible'}`);
   if (!errors.length) approved++;

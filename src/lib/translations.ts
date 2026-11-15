@@ -42,52 +42,162 @@ export const translations = {
     notFoundTitle: 'Cette page n’est pas disponible.', notFoundText: "Le lien peut être incorrect ou le produit ne plus être disponible.", back: 'Retour à l’accueil',
     details: 'Voir les détails', inquiry: 'Demander des informations sur WhatsApp', included: 'Assistance incluse avec ce produit', compatibility: 'Compatibilité', conditions: 'Conditions essentielles', delivery: 'Livraison', withdrawal: 'Rétractation', conformity: 'Conformité & recours', problems: 'Un problème après un achat ?', reference: 'Référence', tax: 'Prix total en EUR',
   },
-  nl: {
-    paymentMethods: 'Betaalmethode', paymentNote: 'Je betaalt op de betaalpagina van PayPal.',
-    nav: ['Home', 'Producten', 'Hulp & klantendienst', 'Contact'],
-    skip: 'Naar de inhoud', menu: 'Navigatie', close: 'Menu sluiten', open: 'Menu openen',
-    preview: "Catalogus", previewNote: "Games, software en digitaal entertainment. Ontdek de aanbiedingen van Zakinus Store en neem contact op met ons team.",
-    ask: 'Stel een vraag',
-    eyebrow: 'Games, software & entertainment', hero1: 'Hier begint', hero2: 'jouw spel.',
-    intro: 'Xbox Game Pass Ultimate, Windows, Office en entertainment. Ontdek onze selectie en vind jouw volgende digitale wereld.',
-    discover: 'Ontdek de catalogus', talk: 'Vertel ons wat je zoekt',
-    external: "Een vraag over een product? Ons team helpt je via WhatsApp.",
-    illustration: "Gamecontroller in een berglandschap bij schemering.",
-    visualTag: 'EEN ANDER PERSPECTIEF', visualText: 'Jouw vragen.\nOns vertrekpunt.',
-    reassurance: ["Betalen bij PayPal","Aanbiedingen in euro","Rechtstreeks contact via WhatsApp"],
-    catalogEyebrow: 'Ontdek de selectie', catalogTitle: 'Voor iedereen een eigen wereld.',
-    catalogSub: "Vergelijk de aanbiedingen, kies je variant en vind wat bij je past.",
-    allProducts: 'Bekijk de catalogus', emptyTag: "CATALOGUS", emptyTitle: "Geen producten in\ndeze selectie.",
-    emptyText: "Bekijk een andere categorie of neem contact op om het juiste product te vinden.",
-    emptyLink: 'Intussen een vraag?', noProducts: 'Geen producten beschikbaar',
-    journeyTag: 'Voor & na je aankoop', journeyTitle: 'Elke stap verdient\nduidelijkheid.',
-    journeySub: "Van je productkeuze tot de levering blijf je rechtstreeks in contact met ons team.",
-    steps: [["Kies je aanbieding","Vergelijk de producten en selecteer de looptijd of editie die bij je past."],["Betaal bij PayPal","Open de link van je gekozen variant en controleer het product en bedrag voordat je betaalt."],["Ontvang je product","Ons team controleert je betaling en levert handmatig. Neem voor de opvolging contact op via WhatsApp."]],
-    supportLink: 'Ontdek de klantendienst', faqTag: 'Veelgestelde vragen', faqTitle: 'Een paar antwoorden\nom te beginnen.',
-    faqs: [["Hoe betaal ik?","Kies een beschikbare variant en gebruik de PayPal-knop wanneer die wordt getoond. Controleer het product en bedrag bij PayPal voordat je betaalt. Neem bij vragen contact op via WhatsApp."],["Hoe stel ik een vraag?","Neem via WhatsApp contact op met Zakinus Store. Vermeld het product en de variant waarover je meer wilt weten."],["Hoe wordt mijn product geleverd?","Ons team controleert de betaling en levert daarna handmatig. Neem voor de opvolging contact op via WhatsApp met je aankoopreferentie."],["Hoe krijg ik hulp na een aankoop?","Ga naar Hulp & klantendienst en kies het onderwerp van je aanvraag: ondersteuning, retour of klacht."]],
-    contactTag: 'Heb je een vraag?', contactTitle: 'Laten we een\ngesprek beginnen.', contactText: "Advies bij het kiezen of een vraag over je aankoop? Ons team helpt je verder.",
-    footerAbout: "Games, software en digitaal entertainment. Je volgende wereld begint hier.", explore: 'Ontdekken', information: 'Informatie', contact: 'Contact opnemen', footerNote: "Betalen bij PayPal",
-    policies: { legal: 'Juridische informatie', terms: 'Verkoopvoorwaarden', privacy: 'Privacy', storage: 'Cookies & opslag', returns: 'Herroeping & retourneren', delivery: 'Levering', accessibility: 'Toegankelijkheid' },
-    draftNotice: "Kies je variant en controleer het product en bedrag bij PayPal voordat je betaalt. Een vraag? Neem contact op via WhatsApp.",
-    activationBundle: 'ACTIVATIEPAKKET', clientPrice: "Prijs in EUR",
-    catalogPageTitle: 'Je volgende keuze,\nmet kennis van zaken.', catalogPageText: "Windows 11 Pro + Office, IPTV en Xbox Game Pass Ultimate: vergelijk de aanbiedingen en kies je variant.",
-    helpChoose: 'Hulp nodig bij het kiezen?', supportTag: 'Hulp & klantendienst', supportTitle: 'Een vraag?\nKies de juiste weg.',
-    supportIntro: 'Voor een aankoop, bij een bestaande aankoop of voor een klacht: kies het onderwerp van je gesprek.',
-    supportCards: [["Voor een aankoop","Advies over een product, de compatibiliteit of de juiste variant? We helpen je kiezen.","Stel een vraag via WhatsApp"],["Een bestaande aankoop","Neem contact op voor de opvolging of ondersteuning van je aankoop.","Vraag hulp via WhatsApp"],["Retour of klacht","Leg je aanvraag uit aan ons team en vermeld je aankoopreferentie.","Neem contact op"]],
-    serviceTitle: "Zo helpen we je verder", serviceText: "Vermeld het product, je aankoopreferentie en een korte beschrijving van je vraag. Zo kan ons team je gericht helpen.",
-    securityTitle: 'Deel alleen wat nodig is', securityText: 'Vermeld in het gesprek het product, een bestaande aankoopreferentie als je die hebt, en een korte beschrijving van het probleem. Deel nooit wachtwoorden, inlogcodes, bankgegevens of volledige licentiesleutels.',
-    escalationText: "Bewaar voor een retour of klacht je aankoopreferentie en de gesprekken met ons team.",
-    emailMissing: "",
-    sellerTitle: "Advies of een vraag?\nLaten we praten.", sellerText: "Voor productadvies, de opvolging van een aankoop of hulp kun je ons team bereiken via WhatsApp.", establishment: "", country: "", phone: "WhatsApp", email: "Contact",
-    policyPending: "Praktische informatie", policyText: "Neem voor de voorwaarden van je product contact op met ons team voordat je betaalt. Vermeld bij een vraag over een bestaande aankoop je aankoopreferentie.",
-    storageText: "De taalkeuze blijft in de URL. De applicatie voegt geen analysetools, advertentiepixels of browseropslag toe. PayPal en WhatsApp openen alleen wanneer je een externe link volgt; op hun diensten geldt hun eigen beleid.",
-    accessibilityText: "De website ondersteunt toetsenbordnavigatie, skiplinks, zichtbare focus en verminderde animaties. Neem bij een probleem contact op met ons team via WhatsApp.",
-    notFoundTitle: 'Deze pagina is niet beschikbaar.', notFoundText: "De link kan onjuist zijn of het product is niet meer beschikbaar.", back: 'Terug naar de homepagina',
-    details: 'Bekijk details', inquiry: 'Vraag informatie via WhatsApp', included: 'Inbegrepen ondersteuning bij dit product', compatibility: 'Compatibiliteit', conditions: 'Belangrijke voorwaarden', delivery: 'Levering', withdrawal: 'Herroeping', conformity: 'Conformiteit & rechtsmiddelen', problems: 'Een probleem na een aankoop?', reference: 'Referentie', tax: 'Totaalprijs in EUR',
-  },
+  en: {
+    "paymentMethods": "Payment method",
+    "paymentNote": "Checkout takes place on PayPal.",
+    "nav": [
+        "Home",
+        "Products",
+        "Help & support",
+        "Contact"
+    ],
+    "skip": "Skip to content",
+    "menu": "Navigation",
+    "close": "Close menu",
+    "open": "Open menu",
+    "preview": "Catalogue",
+    "previewNote": "Games, software and digital entertainment. Explore Zakinus Store offers and contact our team.",
+    "ask": "Ask a question",
+    "eyebrow": "Games, software & entertainment",
+    "hero1": "Your game",
+    "hero2": "starts here.",
+    "intro": "Xbox Game Pass Ultimate, Windows, Office and entertainment. Explore our selection and find your next digital world.",
+    "discover": "Explore the catalogue",
+    "talk": "Tell us what you're looking for",
+    "external": "Have a question about a product? Our team can help on WhatsApp.",
+    "illustration": "A game controller in a mountain landscape at dusk.",
+    "visualTag": "A DIFFERENT PERSPECTIVE",
+    "visualText": "Your questions.\nOur starting point.",
+    "reassurance": [
+        "Checkout on PayPal",
+        "Prices in euros",
+        "Direct contact on WhatsApp"
+    ],
+    "catalogEyebrow": "Discover the selection",
+    "catalogTitle": "A world for every interest.",
+    "catalogSub": "Compare offers, choose your variant and find what suits you.",
+    "allProducts": "View the catalogue",
+    "emptyTag": "CATALOGUE",
+    "emptyTitle": "No products in\nthis selection.",
+    "emptyText": "Explore another category or contact us to find the right product.",
+    "emptyLink": "Have a question in the meantime?",
+    "noProducts": "No products available",
+    "journeyTag": "Before & after your purchase",
+    "journeyTitle": "Clarity at\nevery step.",
+    "journeySub": "From choosing a product to receiving it, stay in direct contact with our team.",
+    "steps": [
+        [
+            "Choose your offer",
+            "Compare products and select the duration or edition that suits you."
+        ],
+        [
+            "Pay on PayPal",
+            "Open the link for your chosen variant and check the product and amount before paying."
+        ],
+        [
+            "Receive your product",
+            "Our team verifies your payment and delivers manually. Contact us on WhatsApp for updates."
+        ]
+    ],
+    "supportLink": "Explore help & support",
+    "faqTag": "Frequently asked questions",
+    "faqTitle": "A few answers\nto get started.",
+    "faqs": [
+        [
+            "How do I pay?",
+            "Choose an available variant and use its PayPal button when shown. Check the product and amount on PayPal before paying. Contact us on WhatsApp with any questions."
+        ],
+        [
+            "How do I ask a question?",
+            "Contact Zakinus Store on WhatsApp. Tell us which product and variant you are interested in."
+        ],
+        [
+            "How is my product delivered?",
+            "Our team verifies the payment and then delivers manually. Contact us on WhatsApp with your purchase reference for updates."
+        ],
+        [
+            "How do I get help after a purchase?",
+            "Open Help & support and choose the subject of your request: support, a return or a complaint."
+        ]
+    ],
+    "contactTag": "Have something in mind?",
+    "contactTitle": "Let's start\na conversation.",
+    "contactText": "Need advice before choosing or have a question about your purchase? Our team can help.",
+    "footerAbout": "Games, software and digital entertainment. Your next world starts here.",
+    "explore": "Explore",
+    "information": "Information",
+    "contact": "Contact us",
+    "footerNote": "Checkout on PayPal",
+    "policies": {
+        "legal": "Legal information",
+        "terms": "Terms of sale",
+        "privacy": "Privacy",
+        "storage": "Cookies & storage",
+        "returns": "Cancellation & returns",
+        "delivery": "Delivery",
+        "accessibility": "Accessibility"
+    },
+    "draftNotice": "Choose your variant and check the product and amount on PayPal before paying. Have a question? Contact us on WhatsApp.",
+    "activationBundle": "ACTIVATION BUNDLE",
+    "clientPrice": "Price in EUR",
+    "catalogPageTitle": "Make your next choice\nwith confidence.",
+    "catalogPageText": "Windows 11 Pro + Office, IPTV and Xbox Game Pass Ultimate: compare offers and choose your variant.",
+    "helpChoose": "Need help choosing?",
+    "supportTag": "Help & support",
+    "supportTitle": "Have a question?\nFind the right help.",
+    "supportIntro": "Before a purchase, for an existing purchase or to make a complaint: choose the subject of your conversation.",
+    "supportCards": [
+        [
+            "Before a purchase",
+            "Need advice on a product, compatibility or which variant to choose? Talk to us.",
+            "Ask a question on WhatsApp"
+        ],
+        [
+            "An existing purchase",
+            "Contact us for updates or support with your purchase.",
+            "Get help on WhatsApp"
+        ],
+        [
+            "A return or complaint",
+            "Explain your request to our team and include your purchase reference.",
+            "Contact our team"
+        ]
+    ],
+    "serviceTitle": "Help us help you",
+    "serviceText": "Tell us the product, your purchase reference and a short description of your request so our team can help you.",
+    "securityTitle": "Share only what is needed",
+    "securityText": "Include the product, an existing purchase reference if you have one, and a short description of the issue. Never share passwords, sign-in codes, bank details or complete licence keys.",
+    "escalationText": "For a return or complaint, keep your purchase reference and your conversations with our team.",
+    "emailMissing": "",
+    "sellerTitle": "Need advice?\nLet’s talk.",
+    "sellerText": "For product advice, purchase updates or support, contact our team on WhatsApp.",
+    "establishment": "",
+    "country": "",
+    "phone": "WhatsApp",
+    "email": "Contact",
+    "policyPending": "Useful information",
+    "policyText": "Contact our team before paying to learn the terms that apply to your product. For an existing purchase, include your purchase reference.",
+    "storageText": "Your language choice stays in the URL. The application adds no analytics tools, advertising pixels or browser storage. PayPal and WhatsApp open only when you follow an external link; their own policies apply on their services.",
+    "accessibilityText": "The site supports keyboard navigation, skip links, visible focus indicators and reduced motion. If you encounter a problem, contact our team on WhatsApp.",
+    "notFoundTitle": "This page is unavailable.",
+    "notFoundText": "The link may be incorrect or the product may no longer be available.",
+    "back": "Back to home",
+    "details": "View details",
+    "inquiry": "Ask for information on WhatsApp",
+    "included": "Support included with this product",
+    "compatibility": "Compatibility",
+    "conditions": "Essential conditions",
+    "delivery": "Delivery",
+    "withdrawal": "Cancellation",
+    "conformity": "Conformity & remedies",
+    "problems": "A problem after a purchase?",
+    "reference": "Reference",
+    "tax": "Total price in EUR"
+},
+
 };
 
 // Customer-facing copy stays consistent while payment availability is controlled separately.
-export function getTranslations(locale: 'fr' | 'nl', _paymentsEnabled = false) {
+export function getTranslations(locale: 'fr' | 'en', _paymentsEnabled = false) {
   return translations[locale];
 }

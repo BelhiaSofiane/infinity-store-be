@@ -1,6 +1,6 @@
 # Infinity Store — Next.js catalog preview
 
-Built 9 November 2026. French (`/fr`) and Belgian Dutch (`/nl`), EUR. Next.js App Router, React, TypeScript, CSS. Optional external PayPal checkout links; no accounts, admin, payment tracking or database. Payments are disabled by default; see [PayPal setup](docs/PAYPAL.md).
+Built 9 November 2026. French (`/fr`) and English (`/en`), EUR. Next.js App Router, React, TypeScript, CSS. Optional external PayPal checkout links; no accounts, admin, payment tracking or database. Payments are disabled by default; see [PayPal setup](docs/PAYPAL.md).
 
 ## Run
 
@@ -24,7 +24,7 @@ npm run build:commercial
 
 `build` compiles the private preview. `build:commercial` deliberately fails while site-wide mandatory data/reviews are missing. It does not certify legal compliance, authenticate evidence or deploy anything. Never use the ordinary preview build as a commercial approval. All current builds remain non-indexable regardless of readiness; enabling a reviewed production host, indexing, real canonicals, reciprocal hreflang, sitemap and approved policies is a separate implementation/review task. The catalog preview can be deployed without a username or password.
 
-The local server binds to loopback. Hosted domains open without Basic authentication; no preview username or password is required. The proxy sets the document language for French and Dutch routes. `noindex` controls indexing and does not restrict access.
+The local server binds to loopback. Hosted domains open without Basic authentication; no preview username or password is required. The proxy sets the document language for French and English routes. `noindex` controls indexing and does not restrict access.
 
 ## Edit
 

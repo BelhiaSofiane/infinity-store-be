@@ -10,13 +10,22 @@ const seed = () => structuredClone(localCatalog(source));
 const update = (rows,sku,field,value) => { const row=rows.find(r => r[0] === sku); row[PRODUCT_HEADERS.indexOf(field)] = value; };
 const parse = s => parseCatalog(s.productRows,s.categoryRows);
 
+test('English header migration accepts the prior sheet schema and rejects ambiguous aliases',()=>{
+  const s=seed(), expected=parse(s);
+  s.productRows[0]=s.productRows[0].map(h=>h.replace(/_en$/, '_nl'));
+  s.categoryRows[0]=s.categoryRows[0].map(h=>h.replace(/_en$/, '_nl'));
+  assert.deepEqual(parse(s),expected);
+  s.productRows[0].push('name_en');
+  assert.throws(()=>parse(s),/invalid_headers/);
+});
+
 test('template seeds eight variants with exact prices, translations, and conservative stock',()=>{
   const data=seed(), result=parse(data);
   assert.equal(result.products.length,8);
   assert.deepEqual(result.issues,[]);
   assert.deepEqual(result.products.map(p=>p.priceEUR).sort((a,b)=>a-b),source.map(p=>p.priceEUR).sort((a,b)=>a-b));
   assert.ok(result.products.every(p=>p.status==='pending_review' && p.availability==='sold_out'));
-  assert.equal(result.products.find(p=>p.sku==='game-pass-2-mois').translations.nl.variant,'2 maanden');
+  assert.equal(result.products.find(p=>p.sku==='game-pass-2-mois').translations.en.variant,'2 months');
   assert.ok(data.products.every(p=>p.availability==='unconfirmed'));
 });
 test('prices preserve cents and reject strings, negative, nonfinite, and extra precision',()=>{
@@ -34,7 +43,7 @@ test('hidden and deleted rows disappear, including an intentionally empty catalo
   assert.equal(parseCatalog([PRODUCT_HEADERS],s.categoryRows).products.length,0);
 });
 test('unknown images, categories, unsupported stock and missing language names are excluded',()=>{
-  for(const [field,value] of [['image_key','https://bad.example/image.png'],['image_key','__proto__'],['category_id','missing'],['availability','approved'],['name_nl','']]) {
+  for(const [field,value] of [['image_key','https://bad.example/image.png'],['image_key','__proto__'],['category_id','missing'],['availability','approved'],['name_en','']]) {
     const s=seed(); update(s.productRows,'iptv-1-an',field,value);
     assert.ok(!parse(s).products.some(p=>p.sku==='iptv-1-an'));
   }
@@ -51,13 +60,13 @@ test('new categories and grouped products work with ordering and approved artwor
 test('duplicate SKUs and conflicting group metadata exclude entire affected groups',()=>{
   const s=seed(); s.productRows.push([...s.productRows.find(p=>p[0]==='game-pass-2-mois')]);
   assert.ok(!parse(s).products.some(p=>p.groupId==='game-pass'));
-  for(const field of ['name_fr','description_nl','category_id','image_key']) {
+  for(const field of ['name_fr','description_en','category_id','image_key']) {
     const s=seed(); update(s.productRows,'game-pass-2-mois',field,field==='category_id'?'iptv':field==='image_key'?'iptv':'Changed');
     assert.ok(!parse(s).products.some(p=>p.groupId==='game-pass'));
   }
 });
 test('duplicate or missing variant labels reject ambiguous multi-variant groups',()=>{
-  const s=seed(); update(s.productRows,'game-pass-85-jours','variant_nl','2 maanden');
+  const s=seed(); update(s.productRows,'game-pass-85-jours','variant_en','2 months');
   assert.ok(!parse(s).products.some(p=>p.groupId==='game-pass'));
 });
 test('missing or duplicate headers fail sync instead of erasing the prior snapshot',()=>{

@@ -1,6 +1,6 @@
 # Catalog and evidence model
 
-The client supplied eight references and EUR prices: Windows 11 Pro + Office activation bundle (€25), IPTV for one year (€35), and Game Pass for two months (€25), 85 days (€35), 120 days (€45), six months (€60), eight months (€75), and one year (€100). These are stored as `pending_review` in `content/products.json` and displayed as seller-supplied prices in the private preview, with French and Dutch names. The bundle price is for Windows + Office together. Office version, Game Pass edition, supplier, availability, license conditions, taxes, imagery rights and support scope have not been supplied. No approvals or stock have been inferred.
+The client supplied eight references and EUR prices: Windows 11 Pro + Office activation bundle (€25), IPTV for one year (€35), and Game Pass for two months (€25), 85 days (€35), 120 days (€45), six months (€60), eight months (€75), and one year (€100). These are stored as `pending_review` in `content/products.json` and displayed as seller-supplied prices in the private preview, with French and English names. The bundle price is for Windows + Office together. Office version, Game Pass edition, supplier, availability, license conditions, taxes, imagery rights and support scope have not been supplied. No approvals or stock have been inferred.
 
 Draft records only contain supplied identifiers, names, durations and prices. `getDraftProducts` projects those fields into preview cards without product detail routes. `getProducts` retains the eligibility gate below for published offers; draft cards do not qualify a record for commercial publication.
 
@@ -20,7 +20,7 @@ Each `content/products.json` record must include:
 | supportScope | Confirmed included/paid assistance, duration, limitations and fees |
 | image, imageRightsReference | Verified original/licensed local asset under /assets/; public rights attribution reference |
 | reviewReference | Reference into private product review records |
-| translations.fr / translations.nl | Each needs name, description, conditions, assistance, delivery, withdrawal, conformity, compatibility, taxDisclosure, reviewReference |
+| translations.fr / translations.en | Each needs name, description, conditions, assistance, delivery, withdrawal, conformity, compatibility, taxDisclosure, reviewReference |
 
 IPTV also needs rightsScope (Belgian content/distribution/device scope) and rightsExpiry. Android boxes additionally need manufacturer, euResponsiblePerson, safety, model, conformityReference, returnLogistics. Public manufacturer/responsible-person fields must include required contact details, not just a brand name. Category-specific legal classification remains a human review obligation; automated nonempty-field checks cannot validate its correctness.
 

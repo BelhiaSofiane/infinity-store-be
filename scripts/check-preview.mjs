@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import http from 'node:http';
 const origin = process.env.PREVIEW_ORIGIN || 'http://127.0.0.1:3000';
-const seen = new Set(), pending = ['/fr','/nl'];
+const seen = new Set(), pending = ['/fr','/en'];
 let links = 0, whatsappLinks = 0;
 while (pending.length) {
   const path = pending.shift();
@@ -13,7 +13,7 @@ while (pending.length) {
   assert.match(response.headers.get('content-security-policy'),/frame-ancestors 'none'/);
   assert.equal(response.headers.get('set-cookie'),null);
   const html = await response.text();
-  assert.ok(html.includes(`lang="${path.startsWith('/nl') ? 'nl-BE' : 'fr-BE'}"`),path + ' document language');
+  assert.ok(html.includes(`lang="${path.startsWith('/en') ? 'en-GB' : 'fr-BE'}"`),path + ' document language');
   assert.ok(!html.includes('private-test-evidence'));
   for (const [,raw] of html.matchAll(/<a\s[^>]*href="([^"]+)"/g)) {
     links++;
@@ -22,12 +22,12 @@ while (pending.length) {
     if (url.hostname === 'wa.me') {
       whatsappLinks++;
       assert.equal(url.pathname,'/447391276335');
-      assert.ok(url.searchParams.get('text').startsWith(path.startsWith('/nl') ? 'Hallo Infinity Store' : 'Bonjour Infinity Store'));
+      assert.ok(url.searchParams.get('text').startsWith(path.startsWith('/en') ? 'Hello Zakinus Store' : 'Bonjour Zakinus Store'));
       assert.ok(!url.searchParams.get('text').includes('undefined'));
     }
   }
 }
-for (const path of ['/fr/produits/unapproved-sku','/nl/producten/unapproved-sku','/fr/produits/categorie/iptv','/nl/producten/categorie/windows','/de','/fr/invalid','/private/reviews.json','/content/products.json']) {
+for (const path of ['/fr/produits/unapproved-sku','/en/products/unapproved-sku','/fr/produits/categorie/missing','/en/products/category/missing','/de','/fr/invalid','/private/reviews.json','/content/products.json']) {
   assert.equal((await fetch(origin+path)).status,404,path);
 }
 assert.match(await (await fetch(origin+'/robots.txt')).text(),/Disallow: \//);

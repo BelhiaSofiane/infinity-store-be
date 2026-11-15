@@ -21,18 +21,18 @@ const copy = {
     pay: "Payer avec PayPal",
     checkout: "Finalisez votre paiement sur PayPal dans un nouvel onglet.",
   },
-  nl: {
-    all: "Alles ontdekken",
-    filter: "Catalogus filteren",
-    variant: "Kies je variant",
-    duration: "Kies je looptijd",
-    available: "Beschikbaar",
-    sold_out: "Uitverkocht",
-    unconfirmed: "Beschikbaarheid te bevestigen",
-    game: "Voor elke speler een eigen ritme.",
-    pay: "Betalen met PayPal",
-    checkout: "Rond je betaling af bij PayPal in een nieuw tabblad.",
-  },
+  en: {
+    "all": "Explore all",
+    "filter": "Filter the catalogue",
+    "variant": "Choose your variant",
+    "duration": "Choose your duration",
+    "available": "Available",
+    "sold_out": "Sold out",
+    "unconfirmed": "Availability to be confirmed",
+    "game": "A duration for every player.",
+    "pay": "Pay with PayPal",
+    "checkout": "Complete your payment on PayPal in a new tab."
+},
 };
 
 function Artwork({
@@ -177,7 +177,7 @@ function ProductGroup({
         <div className="product-purchase">
           <div aria-live="polite" aria-atomic="true">
             <strong className="draft-price">
-              {new Intl.NumberFormat(locale + "-BE", {
+              {new Intl.NumberFormat(locale === "en" ? "en-GB" : "fr-BE", {
                 style: "currency",
                 currency: "EUR",
                 minimumFractionDigits: 2,

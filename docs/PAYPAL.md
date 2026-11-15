@@ -24,7 +24,7 @@ As confirmed by the owner, the 3-month and 4-month links map to the existing 85-
 3. Open all eight checkouts. Confirm the receiving seller, product, edition/duration, EUR currency and final total. Configure quantity and extra charges consistently with the displayed price. Correct PayPal and column Q as needed. Check 85-day and 120-day descriptions particularly carefully.
 4. Mark only variants you actually supply `available`; leave other rows `sold_out`.
 5. Set `PAYPAL_LINKS_ENABLED=true` for the intended Vercel environment and redeploy. Leave preview environments disabled unless deliberately testing. This setting does not modify commercial approval records.
-6. Review French and Dutch pages: eligible variants show PayPal and WhatsApp. External checkout opens in a new tab; no embedded SDK or payment tracking is loaded.
+6. Review French and English pages: eligible variants show PayPal and WhatsApp. External checkout opens in a new tab; no embedded SDK or payment tracking is loaded.
 
 Rollback: set `PAYPAL_LINKS_ENABLED=false` and redeploy. Verify the actual transaction, amount, currency and product in PayPal before delivery. A return visit or screenshot is not proof of payment.
 
