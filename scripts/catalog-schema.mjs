@@ -41,7 +41,13 @@ export const IMAGE_LIBRARY = Object.freeze({
     width: 1254,
     height: 1254,
   },
-  iptv: { kind: "tv" },
+  iptv: {
+    kind: "poster",
+    label: "TV subscription - 12 months",
+    src: "/assets/catalog/zakinus-iptv.png",
+    width: 1254,
+    height: 1254,
+  },
 });
 const id = (value) =>
   typeof value === "string" && /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(value);

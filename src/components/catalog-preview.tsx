@@ -43,13 +43,13 @@ function Artwork({
   featured: boolean;
 }) {
   const image = IMAGE_LIBRARY[imageKey as keyof typeof IMAGE_LIBRARY];
-  if ("src" in image)
+  if (image.kind === "poster")
     return (
       <div
         className={
           featured
             ? "pass-art pass-poster-frame"
-            : "catalog-media catalog-media-poster"
+            : `catalog-media catalog-media-poster${imageKey === "iptv" ? " catalog-media-iptv-poster" : ""}`
         }
       >
         <img
