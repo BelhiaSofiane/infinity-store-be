@@ -29,12 +29,12 @@
     "priceEUR": 34.99,
     "translations": {
       "fr": {
-        "name": "IPTV ? 1 an",
-        "description": "Un abonnement IPTV de 12 mois pour votre divertissement TV. Notre équipe vous renseigne sur la compatibilité de votre appareil et les modalités de mise en service."
+        "name": "Abonnement TV - 1 an",
+        "description": "Un abonnement TV de 12 mois pour votre divertissement TV. Notre équipe vous renseigne sur la compatibilité de votre appareil et les modalités de mise en service."
       },
       "en": {
-        "name": "IPTV — 1 year",
-        "description": "A 12-month IPTV subscription for TV and entertainment. Contact our team for information about device compatibility and getting started."
+        "name": "TV subscription - 1 year",
+        "description": "A 12-month TV subscription for entertainment. Contact our team for information about device compatibility and getting started."
       }
     },
     "paypalUrl": "https://www.paypal.com/ncp/payment/W8ZSA7G82FUHQ",

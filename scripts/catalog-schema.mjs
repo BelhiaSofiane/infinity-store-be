@@ -41,17 +41,12 @@ export const IMAGE_LIBRARY = Object.freeze({
     width: 1254,
     height: 1254,
   },
-  iptv: {
-    kind: "poster",
-    label: "IPTV — 12 months",
-    src: "/assets/catalog/zakinus-iptv.png",
-    width: 1254,
-    height: 1254,
-  },
+  iptv: { kind: "tv" },
 });
 const id = (value) =>
   typeof value === "string" && /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(value);
 const text = (value) => (typeof value === "string" ? value.trim() : "");
+const displayText = (value) => text(value).replace(/\biptv\b/gi, "TV");
 const order = (value) =>
   value === "" || value === undefined ? 0 : Number(value);
 const compare = (a, b) => a.sortOrder - b.sortOrder || a.id.localeCompare(b.id);
@@ -100,7 +95,7 @@ export function parseCatalog(productValues, categoryValues) {
     categoryIds.add(key);
     categories.push({
       id: key,
-      translations: { fr: text(r.name_fr), en: text(r.name_en) },
+      translations: { fr: displayText(r.name_fr), en: displayText(r.name_en) },
       sortOrder: order(r.sort_order),
     });
   }
@@ -166,7 +161,7 @@ export function parseCatalog(productValues, categoryValues) {
       groupId,
       category: text(r.category_id),
       status: "pending_review",
-      edition: text(r.edition),
+      edition: displayText(r.edition),
       priceEUR: Math.round(price * 100) / 100,
       paypalUrl: paymentUrl,
       paypalPriceEUR: paymentCents === null ? null : paymentCents / 100,
@@ -175,14 +170,14 @@ export function parseCatalog(productValues, categoryValues) {
       sortOrder: order(r.sort_order),
       translations: {
         fr: {
-          name: text(r.name_fr),
-          description: text(r.description_fr),
-          variant: text(r.variant_fr),
+          name: displayText(r.name_fr),
+          description: displayText(r.description_fr),
+          variant: displayText(r.variant_fr),
         },
         en: {
-          name: text(r.name_en),
-          description: text(r.description_en),
-          variant: text(r.variant_en),
+          name: displayText(r.name_en),
+          description: displayText(r.description_en),
+          variant: displayText(r.variant_en),
         },
       },
     });
