@@ -101,6 +101,16 @@ test('Google transport performs one read-only batch for both tabs and typed valu
   }});
   assert.equal(calls,1); assert.equal(result.products.length,8); assert.equal(result.fetchedAt,1234);
 });
+test('Google transport retries one transient first-load failure before hiding the catalog',async()=>{
+  const s=seed(); let calls=0;
+  const result=await fetchGoogleCatalog({sheetId:'test-sheet'},{retryDelayMs:0,request:async()=>{
+    calls++;
+    if(calls===1) throw new Error('temporary network failure');
+    return {data:{valueRanges:[{values:s.productRows},{values:s.categoryRows}]}};
+  }});
+  assert.equal(calls,2);
+  assert.equal(result.products.length,8);
+});
 test('access-denied and timeout errors are classified without credential or raw response leakage',async()=>{
   for(const [status,code] of [[401,'authentication_failed'],[403,'access_denied_or_api_disabled'],[404,'spreadsheet_not_found'],[429,'google_quota_exceeded']]) {
     await assert.rejects(fetchGoogleCatalog({sheetId:'test'},{request:async()=>{throw {response:{status,data:'secret'}};}}),e=>e instanceof CatalogError && e.message===code);

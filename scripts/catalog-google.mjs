@@ -41,10 +41,10 @@ export function safeCatalogError(error) {
 }
 export async function fetchGoogleCatalog(
   config,
-  { request, now = Date.now, timeoutMs = 10000 } = {},
+  { request, now = Date.now, timeoutMs = 10000, retryDelayMs = 250, maxAttempts = 2 } = {},
 ) {
-  const controller = new AbortController();
-  let timer;
+  const attempts = Number.isInteger(maxAttempts) && maxAttempts > 0 ? maxAttempts : 1;
+  const retryable = new Set(["google_connection_failed", "google_timeout", "google_quota_exceeded"]);
   try {
     const url = new URL(
       `https://sheets.googleapis.com/v4/spreadsheets/${config.sheetId}/values:batchGet`,
@@ -61,21 +61,35 @@ export async function fetchGoogleCatalog(
           scopes: [SHEETS_SCOPE],
         });
     const run = request || ((options) => client.request(options));
-    const response = await Promise.race([
-      run({
-        url: url.toString(),
-        method: "GET",
-        signal: controller.signal,
-        timeout: timeoutMs,
-        retry: false,
-      }),
-      new Promise((_, reject) => {
-        timer = setTimeout(() => {
-          controller.abort();
-          reject(new CatalogError("google_timeout"));
-        }, timeoutMs);
-      }),
-    ]);
+    let response;
+    for (let attempt = 1; attempt <= attempts; attempt++) {
+      const controller = new AbortController();
+      let timer;
+      try {
+        response = await Promise.race([
+          run({
+            url: url.toString(),
+            method: "GET",
+            signal: controller.signal,
+            timeout: timeoutMs,
+            retry: false,
+          }),
+          new Promise((_, reject) => {
+            timer = setTimeout(() => {
+              controller.abort();
+              reject(new CatalogError("google_timeout"));
+            }, timeoutMs);
+          }),
+        ]);
+        break;
+      } catch (error) {
+        const code = safeCatalogError(error);
+        if (attempt === attempts || !retryable.has(code)) throw new CatalogError(code);
+        await new Promise((resolve) => setTimeout(resolve, retryDelayMs));
+      } finally {
+        clearTimeout(timer);
+      }
+    }
     const ranges = response?.data?.valueRanges;
     if (!Array.isArray(ranges) || ranges.length !== 2)
       throw new CatalogError("invalid_google_response");
@@ -83,8 +97,6 @@ export async function fetchGoogleCatalog(
     return { ...parsed, fetchedAt: now() };
   } catch (error) {
     throw new CatalogError(safeCatalogError(error));
-  } finally {
-    clearTimeout(timer);
   }
 }
 
