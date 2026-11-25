@@ -109,7 +109,7 @@ For example, add category `accessories` with labels `Accessoires` / `Accessoires
 
 The optional `image_preview` column R is for viewing artwork in the spreadsheet only. All eight product rows contain permanent Drive image preview chips in the live sheet; the import workbook embeds thumbnails. The website uses the stable `iptv`, `game-pass`, or `windows-office` image key and its local image library; it does not load spreadsheet preview links.
 
-New images must be added to the website's local library first. Ask for the artwork to be added, then use its new image key. External image URLs, Drive links and arbitrary filenames are not accepted. The special `game-pass` group with the `game-pass` image retains its featured layout; other groups use reusable cards and selectors.
+For new pictures, use column S with the header `image_url`. Paste a public HTTPS image URL there, or a Google Drive file link shared with “Anyone with the link” as Viewer. The image URL takes precedence over `image_key`, so new products do not need a registered image key. Use the same URL for every variant in a group. Leave it blank to keep the existing local artwork. Column R (`image_preview`) remains a spreadsheet-only preview; inserting an image or chip there does not publish it to the website. Private files and ordinary web page links cannot be displayed as product pictures. Changes appear after the catalogue cache refreshes (normally about 60 seconds).
 
 The supplied poster contains printed prices. Editing a cell does not edit those pixels: replace that poster if its printed prices no longer match the sheet.
 

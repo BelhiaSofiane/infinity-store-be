@@ -57,6 +57,24 @@ test('new categories and grouped products work with ordering and approved artwor
   assert.equal(result.products[0].sku,'accessory-small');
   assert.equal(result.products.filter(p=>p.groupId==='accessory').length,2);
 });
+test('optional image links allow new artwork and normalize public Drive file links',()=>{
+  for (const [input,expected] of [
+    ['https://images.example.com/steam.png','https://images.example.com/steam.png'],
+    ['https://drive.google.com/file/d/test-file/view?usp=sharing','https://drive.google.com/thumbnail?id=test-file&sz=w1600'],
+  ]) {
+    const s=seed(); s.productRows[0].push('image_url');
+    const row=s.productRows.find(r=>r[0]==='iptv-1-an');
+    row[PRODUCT_HEADERS.indexOf('image_key')]='steam'; row.push(input);
+    assert.equal(parse(s).products.find(p=>p.sku==='iptv-1-an').imageUrl,expected);
+  }
+  for (const input of ['javascript:alert(1)','http://example.com/image.png','https://user:password@example.com/image.png']) {
+    const s=seed(); s.productRows[0].push('image_url');
+    const row=s.productRows.find(r=>r[0]==='iptv-1-an'); row.push(input);
+    const result=parse(s);
+    assert.equal(result.products.find(p=>p.sku==='iptv-1-an').imageUrl,null);
+    assert.ok(result.issues.some(i=>i.code==='invalid_image_url'));
+  }
+});
 test('duplicate SKUs and conflicting group metadata exclude entire affected groups',()=>{
   const s=seed(); s.productRows.push([...s.productRows.find(p=>p[0]==='game-pass-2-mois')]);
   assert.ok(!parse(s).products.some(p=>p.groupId==='game-pass'));
@@ -95,7 +113,7 @@ test('Google transport performs one read-only batch for both tabs and typed valu
   const result=await fetchGoogleCatalog({sheetId:'test-sheet'},{now:()=>1234,request:async opts=>{
     calls++; assert.equal(opts.method,'GET');
     const url=new URL(opts.url); assert.equal(url.origin,'https://sheets.googleapis.com');
-    assert.deepEqual(url.searchParams.getAll('ranges'),['Products!A:Q','Categories!A:D']);
+    assert.deepEqual(url.searchParams.getAll('ranges'),['Products!A:S','Categories!A:D']);
     assert.equal(url.searchParams.get('valueRenderOption'),'UNFORMATTED_VALUE');
     return {data:{valueRanges:[{values:s.productRows},{values:s.categoryRows}]}};
   }});

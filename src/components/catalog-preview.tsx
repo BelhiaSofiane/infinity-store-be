@@ -37,12 +37,19 @@ const copy = {
 
 function Artwork({
   imageKey,
+  imageUrl,
+  label,
   featured,
 }: {
   imageKey: string;
+  imageUrl?: string | null;
+  label: string;
   featured: boolean;
 }) {
+  const [failedUrl, setFailedUrl] = useState<string | null>(null);
+  if (imageUrl && failedUrl !== imageUrl) return <div className={featured ? "pass-art pass-poster-frame" : "catalog-media catalog-media-poster"}><img src={imageUrl} alt={label} width={1254} height={1254} loading="lazy" referrerPolicy="no-referrer" onError={() => setFailedUrl(imageUrl)}/></div>;
   const image = IMAGE_LIBRARY[imageKey as keyof typeof IMAGE_LIBRARY];
+  if (!image) return <div className="catalog-media" role="img" aria-label={label}/>;
   if (image.kind === "poster")
     return (
       <div
@@ -135,7 +142,7 @@ function ProductGroup({
       className={featured ? "pass-feature" : "product-card draft-card"}
       aria-labelledby={`${name}-title`}
     >
-      <Artwork imageKey={selected.imageKey} featured={featured} />
+      <Artwork imageKey={selected.imageKey} imageUrl={selected.imageUrl} label={selected.translations[locale].name} featured={featured} />
       <div className={featured ? "pass-content" : "catalog-card-content"}>
         <span className="product-family">{category}</span>
         <h3 id={`${name}-title`}>{displayName}</h3>

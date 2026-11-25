@@ -11,6 +11,7 @@ export type CatalogItem = {
   paypalPriceEUR: number | null;
   availability: "available" | "sold_out" | "unconfirmed";
   imageKey: string;
+  imageUrl?: string | null;
   sortOrder: number;
   translations: Record<
     CatalogLocale,

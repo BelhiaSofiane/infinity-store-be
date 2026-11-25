@@ -25,6 +25,21 @@ export const CATEGORY_HEADERS = [
   "name_en",
   "sort_order",
 ];
+// Images are loaded by the browser, never fetched by the application server.
+export function catalogImageUrl(value) {
+  try {
+    const url = new URL(typeof value === "string" ? value.trim() : "");
+    if (url.protocol !== "https:" || url.username || url.password) return null;
+    if (url.hostname === "drive.google.com") {
+      const fileId = url.pathname.match(/^\/file\/d\/([\w-]+)/)?.[1] || url.searchParams.get("id");
+      if (!fileId || !/^[\w-]+$/.test(fileId)) return null;
+      return `https://drive.google.com/thumbnail?id=${fileId}&sz=w1600`;
+    }
+    return url.href;
+  } catch {
+    return null;
+  }
+}
 // Public artwork metadata only. This module is safe to import in client components.
 export const IMAGE_LIBRARY = Object.freeze({
   "game-pass": {
@@ -109,7 +124,7 @@ export function parseCatalog(productValues, categoryValues) {
     .filter((c) => !badCategories.has(c.id))
     .sort(compare);
   const knownCategories = new Set(validCategories.map((c) => c.id));
-  const rows = records(productValues, REQUIRED_PRODUCT_HEADERS, "Products", PAYPAL_HEADERS);
+  const rows = records(productValues, REQUIRED_PRODUCT_HEADERS, "Products", [...PAYPAL_HEADERS, "image_url"]);
   const skuCounts = new Map(),
     blockedGroups = new Set();
   for (const r of rows) {
@@ -135,6 +150,8 @@ export function parseCatalog(productValues, categoryValues) {
       continue;
     }
     const price = r.price_eur;
+    const imageUrl = catalogImageUrl(r.image_url);
+    if (r.image_url !== "" && !imageUrl) warn("Products", r.row, "invalid_image_url");
     if (
       !visible ||
       !id(sku) ||
@@ -142,7 +159,7 @@ export function parseCatalog(productValues, categoryValues) {
       !knownCategories.has(text(r.category_id)) ||
       !text(r.name_fr) ||
       !text(r.name_en) ||
-      !Object.hasOwn(IMAGE_LIBRARY, text(r.image_key)) ||
+      (!imageUrl && !Object.hasOwn(IMAGE_LIBRARY, text(r.image_key))) ||
       !["available", "sold_out"].includes(r.availability) ||
       typeof price !== "number" ||
       !Number.isFinite(price) ||
@@ -173,6 +190,7 @@ export function parseCatalog(productValues, categoryValues) {
       paypalPriceEUR: paymentCents === null ? null : paymentCents / 100,
       availability: r.availability,
       imageKey: text(r.image_key),
+      imageUrl,
       sortOrder: order(r.sort_order),
       translations: {
         fr: {
@@ -193,6 +211,7 @@ export function parseCatalog(productValues, categoryValues) {
     const signature = JSON.stringify([
       p.category,
       p.imageKey,
+      p.imageUrl,
       p.translations.fr.name,
       p.translations.en.name,
       p.translations.fr.description,
