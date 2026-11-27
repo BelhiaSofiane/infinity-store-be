@@ -3,12 +3,27 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { generateKeyPairSync } from 'node:crypto';
 import { CATEGORY_HEADERS, PRODUCT_HEADERS, localCatalog, parseCatalog } from '../scripts/catalog-schema.mjs';
-import { CatalogError, fetchGoogleCatalog, publicSnapshot, readCatalogConfig, safeCatalogError, SHEETS_SCOPE } from '../scripts/catalog-google.mjs';
+import { CatalogError, fetchGoogleCatalog, publicSnapshot, snapshotWithRefresh, readCatalogConfig, safeCatalogError, SHEETS_SCOPE } from '../scripts/catalog-google.mjs';
 
 const source = JSON.parse(readFileSync(new URL('../content/products.json',import.meta.url),'utf8'));
 const seed = () => structuredClone(localCatalog(source));
 const update = (rows,sku,field,value) => { const row=rows.find(r => r[0] === sku); row[PRODUCT_HEADERS.indexOf(field)] = value; };
 const parse = s => parseCatalog(s.productRows,s.categoryRows);
+
+test('first visitor after five minutes waits for fresh data instead of seeing unavailable',async()=>{
+  const {products,categories}=parse(seed()); let calls=0;
+  const result=await snapshotWithRefresh({products:[],categories:[],fetchedAt:1},async()=>{
+    calls++; return {products,categories,fetchedAt:600001};
+  },()=>600001);
+  assert.equal(calls,1);
+  assert.equal(result.status,'ready');
+  assert.equal(result.products.length,8);
+});
+test('usable cache needs no extra request and an actual refresh failure stays an error',async()=>{
+  const value={products:[],categories:[],fetchedAt:1000};
+  assert.equal((await snapshotWithRefresh(value,()=>{throw new Error('unexpected refresh');},()=>2000)).status,'ready');
+  await assert.rejects(snapshotWithRefresh(value,async()=>{throw new Error('offline');},()=>600001),/offline/);
+});
 
 test('English header migration accepts the prior sheet schema and rejects ambiguous aliases',()=>{
   const s=seed(), expected=parse(s);

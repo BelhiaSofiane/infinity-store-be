@@ -9,6 +9,7 @@ import {
   readCatalogConfig,
   safeCatalogError,
   publicSnapshot,
+  snapshotWithRefresh,
 } from "../../scripts/catalog-google.mjs";
 import type { CatalogSnapshot } from "./catalog-types";
 
@@ -34,8 +35,7 @@ export const getCatalogSnapshot = cache(async (): Promise<CatalogSnapshot> => {
     const fingerprint = createHash("sha256")
       .update(config.sheetId + config.email + config.key)
       .digest("hex");
-    const load = unstable_cache(
-      async () => {
+    const refresh = async () => {
         try {
           const result = await fetchGoogleCatalog(config);
           for (const issue of result.issues)
@@ -53,11 +53,13 @@ export const getCatalogSnapshot = cache(async (): Promise<CatalogSnapshot> => {
           // Next retains a successful cache entry when revalidation throws. Never cache failures.
           throw new Error(`catalog:${code}`);
         }
-      },
-      ["catalog-sheets-v5-image-url", fingerprint],
+      };
+    const load = unstable_cache(
+      refresh,
+      ["catalog-sheets-v6-block-expired", fingerprint],
       { revalidate: 60 },
     );
-    return publicSnapshot(await load()) as CatalogSnapshot;
+    return await snapshotWithRefresh(await load(), refresh) as CatalogSnapshot;
   } catch (error) {
     console.error(`[catalog] ${safeCatalogError(error)}`);
     return publicSnapshot(null) as CatalogSnapshot;

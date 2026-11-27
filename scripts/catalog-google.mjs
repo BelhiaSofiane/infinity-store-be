@@ -101,6 +101,14 @@ export async function fetchGoogleCatalog(
 }
 
 // Cached snapshots contain no credentials, raw rows, or validation diagnostics.
+// Next can return an expired entry while refreshing it in the background.
+// Await fresh data for this visitor instead of rendering a false outage.
+export async function snapshotWithRefresh(value, refresh, now = Date.now) {
+  const snapshot = publicSnapshot(value, now());
+  if (snapshot.status === "ready") return snapshot;
+  return publicSnapshot(await refresh(), now());
+}
+
 export function publicSnapshot(value, now = Date.now()) {
   const fresh =
     value &&
