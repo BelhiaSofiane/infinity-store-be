@@ -39,24 +39,20 @@ function Artwork({
   imageKey,
   imageUrl,
   label,
-  featured,
 }: {
   imageKey: string;
   imageUrl?: string | null;
   label: string;
-  featured: boolean;
 }) {
   const [failedUrl, setFailedUrl] = useState<string | null>(null);
-  if (imageUrl && failedUrl !== imageUrl) return <div className={featured ? "pass-art pass-poster-frame" : "catalog-media catalog-media-poster"}><img src={imageUrl} alt={label} width={1254} height={1254} loading="lazy" referrerPolicy="no-referrer" onError={() => setFailedUrl(imageUrl)}/></div>;
+  if (imageUrl && failedUrl !== imageUrl) return <div className="catalog-media catalog-media-poster"><img src={imageUrl} alt={label} width={1254} height={1254} loading="lazy" referrerPolicy="no-referrer" onError={() => setFailedUrl(imageUrl)}/></div>;
   const image = IMAGE_LIBRARY[imageKey as keyof typeof IMAGE_LIBRARY];
   if (!image) return <div className="catalog-media" role="img" aria-label={label}/>;
   if (image.kind === "poster")
     return (
       <div
         className={
-          featured
-            ? "pass-art pass-poster-frame"
-            : `catalog-media catalog-media-poster${imageKey === "iptv" ? " catalog-media-iptv-poster" : ""}`
+          "catalog-media catalog-media-poster"
         }
       >
         <img
@@ -129,8 +125,6 @@ function ProductGroup({
     c = copy[locale],
     t = getTranslations(locale, paymentsEnabled);
   const paymentUrl = paypalCheckoutUrl(selected, paymentsEnabled);
-  const featured =
-    selected.groupId === "game-pass" && selected.imageKey === "game-pass";
   const category =
     categories.find((p) => p.id === selected.category)?.translations[locale] ||
     selected.category;
@@ -139,22 +133,22 @@ function ProductGroup({
   const inquiryName = tr.name + (tr.variant ? ` — ${tr.variant}` : "");
   return (
     <article
-      className={featured ? "pass-feature" : "product-card draft-card"}
+      className="product-card draft-card catalog-item"
       aria-labelledby={`${name}-title`}
     >
-      <Artwork imageKey={selected.imageKey} imageUrl={selected.imageUrl} label={selected.translations[locale].name} featured={featured} />
-      <div className={featured ? "pass-content" : "catalog-card-content"}>
+      <Artwork imageKey={selected.imageKey} imageUrl={selected.imageUrl} label={selected.translations[locale].name} />
+      <div className="catalog-card-content">
         <span className="product-family">{category}</span>
         <h3 id={`${name}-title`}>{displayName}</h3>
-        {featured && !tr.description && (
-          <p className="catalog-description">{c.game}</p>
-        )}
         {tr.description && (
-          <p className="catalog-description">{tr.description}</p>
+          <details className="catalog-details">
+            <summary>{locale === "fr" ? "Détails du produit" : "Product details"}</summary>
+            <p className="catalog-description">{tr.description}</p>
+          </details>
         )}
         {items.length > 1 && (
           <fieldset className="duration-options">
-            <legend>{featured ? c.duration : c.variant}</legend>
+            <legend>{c.variant}</legend>
             {items.map((p) => (
               <label key={p.sku}>
                 <input

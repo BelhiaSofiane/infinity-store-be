@@ -57,6 +57,15 @@ test('local preview keeps unconfirmed stock and working inquiry links',()=>{
   assert.ok(html.includes('https://wa.me/'));
   assert.ok(!html.includes('class="button catalog-sold-out"'));
 });
+test('new product groups and long descriptions keep the same reusable card structure',()=>{
+  const data=seed(), template=data.products[0];
+  for(let i=0;i<12;i++) data.products.push({...template,sku:`new-${i}`,groupId:`new-${i}`,imageKey:'new-image',imageUrl:'https://example.com/image.png',translations:{fr:{name:`Produit ${i}`,description:'Long description '.repeat(100),variant:''},en:{name:`Product ${i}`,description:'Long description '.repeat(100),variant:''}}});
+  const html=render(data);
+  assert.equal((html.match(/class="product-card draft-card catalog-item"/g)||[]).length,15);
+  assert.ok(!html.includes('class="pass-feature"'));
+  assert.ok(html.includes('<details class="catalog-details">'));
+  assert.equal((html.match(/src="https:\/\/example.com\/image.png"/g)||[]).length,12);
+});
 
 test('every product variant has a protected PayPal link, matching price and WhatsApp message in both languages',()=>{
   for (const product of source) {
