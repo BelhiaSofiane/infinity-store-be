@@ -36,13 +36,17 @@ export function safeCatalogError(error) {
   if (status === 403) return "access_denied_or_api_disabled";
   if (status === 404) return "spreadsheet_not_found";
   if (status === 429) return "google_quota_exceeded";
+  if (status === 408 || ["ETIMEDOUT", "ECONNABORTED"].includes(error?.code)) return "google_timeout";
+  if (status >= 500) return "google_connection_failed";
+  if (status >= 400) return "invalid_google_request";
   if (error?.message?.startsWith("schema:")) return "invalid_sheet_headers";
   return "google_connection_failed";
 }
 export async function fetchGoogleCatalog(
   config,
-  { request, now = Date.now, timeoutMs = 10000, retryDelayMs = 250, maxAttempts = 2 } = {},
+  { request, now = Date.now, timeoutMs = 10000, retryDelayMs = 250, maxAttempts = 2, totalTimeoutMs = 15000 } = {},
 ) {
+  const deadline = Date.now() + totalTimeoutMs;
   const attempts = Number.isInteger(maxAttempts) && maxAttempts > 0 ? maxAttempts : 1;
   const retryable = new Set(["google_connection_failed", "google_timeout", "google_quota_exceeded"]);
   try {
@@ -63,6 +67,8 @@ export async function fetchGoogleCatalog(
     const run = request || ((options) => client.request(options));
     let response;
     for (let attempt = 1; attempt <= attempts; attempt++) {
+      const attemptTimeoutMs = Math.min(timeoutMs, deadline - Date.now());
+      if (attemptTimeoutMs <= 0) throw new CatalogError("google_timeout");
       const controller = new AbortController();
       let timer;
       try {
@@ -71,20 +77,23 @@ export async function fetchGoogleCatalog(
             url: url.toString(),
             method: "GET",
             signal: controller.signal,
-            timeout: timeoutMs,
+            timeout: attemptTimeoutMs,
             retry: false,
           }),
           new Promise((_, reject) => {
             timer = setTimeout(() => {
               controller.abort();
               reject(new CatalogError("google_timeout"));
-            }, timeoutMs);
+            }, attemptTimeoutMs);
           }),
         ]);
         break;
       } catch (error) {
+        clearTimeout(timer);
+        controller.abort();
         const code = safeCatalogError(error);
         if (attempt === attempts || !retryable.has(code)) throw new CatalogError(code);
+        if (deadline - Date.now() <= retryDelayMs) throw new CatalogError("google_timeout");
         await new Promise((resolve) => setTimeout(resolve, retryDelayMs));
       } finally {
         clearTimeout(timer);
@@ -97,6 +106,21 @@ export async function fetchGoogleCatalog(
     return { ...parsed, fetchedAt: now() };
   } catch (error) {
     throw new CatalogError(safeCatalogError(error));
+  }
+}
+
+// Share in-flight work between background revalidation and foreground visitors
+// on this server instance. Never retain rejected promises or mix credentials.
+const pendingRefreshes = new Map();
+export async function sharedCatalogRefresh(key, refresh) {
+  const existing = pendingRefreshes.get(key);
+  if (existing) return existing;
+  const pending = Promise.resolve().then(refresh);
+  pendingRefreshes.set(key, pending);
+  try {
+    return await pending;
+  } finally {
+    if (pendingRefreshes.get(key) === pending) pendingRefreshes.delete(key);
   }
 }
 
@@ -113,6 +137,8 @@ export function publicSnapshot(value, now = Date.now()) {
   const fresh =
     value &&
     Number.isFinite(value.fetchedAt) &&
+    Array.isArray(value.products) &&
+    Array.isArray(value.categories) &&
     now - value.fetchedAt < 300000 &&
     now >= value.fetchedAt;
   return {

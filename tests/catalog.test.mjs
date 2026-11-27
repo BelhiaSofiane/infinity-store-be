@@ -3,12 +3,40 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { generateKeyPairSync } from 'node:crypto';
 import { CATEGORY_HEADERS, PRODUCT_HEADERS, localCatalog, parseCatalog } from '../scripts/catalog-schema.mjs';
-import { CatalogError, fetchGoogleCatalog, publicSnapshot, snapshotWithRefresh, readCatalogConfig, safeCatalogError, SHEETS_SCOPE } from '../scripts/catalog-google.mjs';
+import { CatalogError, fetchGoogleCatalog, publicSnapshot, snapshotWithRefresh, sharedCatalogRefresh, readCatalogConfig, safeCatalogError, SHEETS_SCOPE } from '../scripts/catalog-google.mjs';
 
 const source = JSON.parse(readFileSync(new URL('../content/products.json',import.meta.url),'utf8'));
 const seed = () => structuredClone(localCatalog(source));
 const update = (rows,sku,field,value) => { const row=rows.find(r => r[0] === sku); row[PRODUCT_HEADERS.indexOf(field)] = value; };
 const parse = s => parseCatalog(s.productRows,s.categoryRows);
+
+test('concurrent refreshes share work, remain partitioned and recover after rejection',async()=>{
+  let release, calls=0;
+  const work=()=>{calls++;return new Promise(resolve=>{release=resolve;});};
+  const a=sharedCatalogRefresh('same',work), b=sharedCatalogRefresh('same',work);
+  assert.equal(await sharedCatalogRefresh('other',async()=>42),42);
+  await Promise.resolve(); release(7);
+  assert.deepEqual(await Promise.all([a,b]),[7,7]); assert.equal(calls,1);
+  await assert.rejects(sharedCatalogRefresh('same',async()=>{throw new Error('offline');}),/offline/);
+  assert.equal(await sharedCatalogRefresh('same',async()=>8),8);
+});
+test('permanent Google errors fail once while server errors retry',async()=>{
+  let calls=0;
+  await assert.rejects(fetchGoogleCatalog({sheetId:'test'},{retryDelayMs:0,request:async()=>{calls++;throw {response:{status:400}};}}),/invalid_google_request/);
+  assert.equal(calls,1);
+  const s=seed(); calls=0;
+  await fetchGoogleCatalog({sheetId:'test'},{retryDelayMs:0,request:async()=>{if(++calls===1)throw {response:{status:503}};return {data:{valueRanges:[{values:s.productRows},{values:s.categoryRows}]}};}});
+  assert.equal(calls,2);
+});
+test('hung requests abort within the shared deadline without starting more work',async()=>{
+  let calls=0,signal;
+  await assert.rejects(fetchGoogleCatalog({sheetId:'test'},{totalTimeoutMs:15,retryDelayMs:250,request:opts=>{calls++;signal=opts.signal;return new Promise(()=>{});}}),/google_timeout/);
+  assert.equal(calls,1);assert.equal(signal.aborted,true);
+});
+test('malformed cached data is refreshed instead of reaching the renderer',async()=>{
+  const result=await snapshotWithRefresh({fetchedAt:1000},async()=>({fetchedAt:1000,products:[],categories:[]}),()=>1000);
+  assert.equal(result.status,'ready');assert.deepEqual(result.products,[]);
+});
 
 test('first visitor after five minutes waits for fresh data instead of seeing unavailable',async()=>{
   const {products,categories}=parse(seed()); let calls=0;
