@@ -47,7 +47,7 @@ function Artwork({
   const [failedUrl, setFailedUrl] = useState<string | null>(null);
   if (imageUrl && failedUrl !== imageUrl) return <div className="catalog-media catalog-media-poster"><img src={imageUrl} alt={label} width={1254} height={1254} loading="lazy" referrerPolicy="no-referrer" onError={() => setFailedUrl(imageUrl)}/></div>;
   const image = IMAGE_LIBRARY[imageKey as keyof typeof IMAGE_LIBRARY];
-  if (!image) return <div className="catalog-media" role="img" aria-label={label}/>;
+  if (!image) return <div className="catalog-media catalog-image-placeholder" role="img" aria-label={label}><Icon name="grid" size={48}/><span>{label}</span></div>;
   if (image.kind === "poster")
     return (
       <div

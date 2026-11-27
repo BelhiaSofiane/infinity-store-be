@@ -1938,6 +1938,8 @@ h2 {
 .catalog-item .catalog-stock { margin: auto 0 0; padding-top: 8px; }
 .catalog-item .product-purchase { padding-top: 0; grid-template-columns: minmax(0, 1fr); gap: 18px; }
 .catalog-item .paypal-explanation { margin-top: 0; }
+.catalog-item .catalog-image-placeholder { display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 16px; padding: 24px; box-sizing: border-box; color: var(--muted); text-align: center; }
+.catalog-image-placeholder span { max-width: 24ch; font-size: 14px; overflow-wrap: anywhere; }
 @media (max-width: 370px) { .catalog-card-content .product-purchase { flex-wrap: wrap; } }
 
 /* Store identity. */
